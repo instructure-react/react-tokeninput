@@ -24,9 +24,6 @@ var App = React.createClass({
 
   handleRemove: function(value) {
     var selectedOptions = uniq(without(this.state.selected,value))
-    this.setState({
-      selected: selectedOptions
-    })
     this.handleChange(selectedOptions)
   },
 
