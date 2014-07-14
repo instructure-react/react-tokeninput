@@ -1,0 +1,140 @@
+body {
+  background-color: #F0F0F0;
+}
+
+.ic-tokeninput {
+  display: inline-block;
+}
+
+.ic-tokeninput-list {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  border: 1px solid #aaa;
+  background: #fff;
+  top: 100%;
+  left: 0;
+  padding: 5px 0px;
+  max-height: 400px;
+  overflow: auto;
+  font-size: 12px;
+  font-family: sans-serif;
+  width: 100%;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.ic-tokeninput-is-open .ic-tokeninput-list {
+  display: block;
+}
+
+.ic-tokeninput-option:focus {
+  outline: 0;
+  color: white;
+  background: hsl(200, 50%, 50%);
+}
+
+.ic-tokeninput-input {
+  padding-right: 20px;
+  width: 100%;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.ic-tokeninput-button {
+  display: inline-block;
+  position: absolute;
+  cursor: default;
+  outline: none;
+  top: 2px;
+  right: 6px;
+  font-size: 14px;
+  cursor: default;
+}
+
+.ic-tokeninput-button:active {
+  color: #4095BF;
+}
+
+.ic-tokeninput-option {
+  display: block;
+  padding: 2px 16px;
+  cursor: default;
+}
+
+.ic-tokeninput-selected:before {
+  content: '✓';
+  position: absolute;
+  left: 4px;
+}
+
+
+.inline-flex {
+  /* 2009 */
+  display: -webkit-inline-box;
+  display: -moz-inline-box;
+
+  /* 2011 */
+  display: -moz-inline-flexbox;
+  display: -ms-inline-flexbox;
+  display: -o-inline-flexbox;
+
+  /* 2012 */
+  display: -webkit-inline-flex;
+  display: inline-flex;
+}
+
+.ic-tokens {
+  list-style: none;
+  padding: 6px 6px;
+  border: 1px solid #A6A6A6;
+  background-color: white;
+  border-radius: 3px;
+  cursor: text;
+  position: relative;
+}
+
+.ic-token {
+  background-color: #F5F7F8;
+  border: 1px solid #C1C7CF;
+  color: #7C8E9A;
+  border-radius: 3px;
+  padding: 3px 8px;
+  margin-right: 6px;
+}
+
+.ic-token-close-button {
+  font-size: 1rem;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.ic-token-close-button:hover {
+  background-color: #ddd;
+}
+
+.ic-tokeninput {
+  /* 2009 */
+  display: -webkit-inline-box;
+  display: -moz-inline-box;
+
+  /* 2011 */
+  display: -moz-inline-flexbox;
+  display: -ms-inline-flexbox;
+  display: -o-inline-flexbox;
+
+  /* 2012 */
+  display: -webkit-inline-flex;
+  display: inline-flex;
+}
+
+.ic-tokeninput-input {
+  border: 0 none;
+  outline: 0;
+}
+
+.ic-tokeninput-button {
+  display: none;
+}

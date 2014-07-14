@@ -1,4 +1,10 @@
-react-tokeninput
-================
+Adapts Ryan Florence's [react-autocomplete](https://github.com/rpflorence/react-autocomplete).
 
-Tokeninput component for React
+See example implementation in `example/`.
+
+## Development
+
+```
+chmod u+x ./script/dev
+./script/dev
+```
