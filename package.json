@@ -2,7 +2,7 @@
   "name": "react-tokeninput",
   "version": "0.0.1",
   "description": "Tokeninput component for React",
-  "main": "lib/main.js",
+  "main": "dist/main.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/instructure/react-tokeninput.git"
