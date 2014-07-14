@@ -1,3 +1,5 @@
 TODO
 *.log
 node_modules
+
+example/bundle.js

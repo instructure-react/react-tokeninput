@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('react')
-var ComboboxOption = require('react-autocomplete/lib/option')
+var ComboboxOption = require('../lib/option')
 var TokenInput = require('../lib/main')
 
 var without = require('lodash-node/modern/arrays/without')
