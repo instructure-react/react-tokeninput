@@ -1,6 +1,6 @@
 {
   "name": "react-tokeninput",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Tokeninput component for React",
   "main": "dist/main.js",
   "scripts": {
