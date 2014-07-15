@@ -253,7 +253,6 @@ module.exports = React.createClass({displayName: 'exports',
   },
 
   selectOption: function(child, options) {
-    console.log('selectOption')
     options = options || {};
     this.setState({
       // value: child.props.value,
@@ -270,7 +269,6 @@ module.exports = React.createClass({displayName: 'exports',
   },
 
   selectText: function() {
-    console.log('selectText')
     var value = this.refs.input.getDOMNode().value;
     if(!value) return;
     this.props.onSelect(value);
@@ -279,8 +277,7 @@ module.exports = React.createClass({displayName: 'exports',
   },
 
   focusNext: function(event) {
-    event.preventDefault();
-
+    if(event.preventDefault) event.preventDefault();
     if (this.state.menu.isEmpty) return;
     var index = this.state.focusedIndex == null ?
       0 : this.state.focusedIndex + 1;
@@ -288,12 +285,11 @@ module.exports = React.createClass({displayName: 'exports',
   },
 
   removeLastToken: function() {
-    console.log('removeLastToken')
     return true
   },
 
   focusPrevious: function(event) {
-    event.preventDefault();
+    if(event.preventDefault) event.preventDefault();
     if (this.state.menu.isEmpty) return;
     var last = this.props.children.length - 1;
     var index = this.state.focusedIndex == null ?
