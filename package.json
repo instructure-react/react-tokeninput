@@ -3,6 +3,9 @@
   "version": "0.0.2",
   "description": "Tokeninput component for React",
   "main": "dist/main.js",
+  "scripts": {
+    "build": "rm -rf dist && node_modules/.bin/broccoli build dist"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/instructure/react-tokeninput.git"
@@ -14,6 +17,9 @@
   },
   "homepage": "https://github.com/instructure/react-tokeninput",
   "devDependencies": {
+    "broccoli": "^0.12.3",
+    "broccoli-cli": "0.0.1",
+    "broccoli-react": "^0.4.0",
     "jsx-loader": "^0.10.2",
     "lodash-node": "^2.4.1",
     "react": "^0.10.0",
