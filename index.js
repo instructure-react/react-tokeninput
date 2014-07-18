@@ -1,4 +1,4 @@
 var TokenInput = require('./lib/main')
-TokenInput.ComboboxOption = require('./lib/option')
+TokenInput.Option = require('./lib/option')
 
 module.exports = TokenInput

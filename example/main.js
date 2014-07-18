@@ -2,7 +2,7 @@
 
 var React = require('react')
 var TokenInput = require('../index')
-var ComboboxOption = require('../index').ComboboxOption
+var ComboboxOption = require('../index').Option
 
 var without = require('lodash-node/modern/arrays/without')
 var uniq = require('lodash-node/modern/arrays/uniq')
