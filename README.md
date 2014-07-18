@@ -10,3 +10,9 @@ See example implementation in `example/`.
 chmod u+x ./script/dev
 ./script/dev
 ```
+
+## Test
+
+```
+npm test
+```
