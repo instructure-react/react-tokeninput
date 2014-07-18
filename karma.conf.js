@@ -27,7 +27,7 @@ module.exports = function(config) {
     colors: true,
     autoWatch: true,
     singleRun: true,
-    browsers: ['Chrome','Firefox'], // 'PhantomJS','Chrome','Firefox','Safari'
+    browsers: ['Firefox'], // 'PhantomJS','Chrome','Firefox','Safari'
     captureTimeout: 60000,
     plugins: [
       require("karma-mocha"),
