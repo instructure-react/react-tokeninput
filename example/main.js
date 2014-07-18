@@ -1,8 +1,8 @@
 /** @jsx React.DOM */
 
 var React = require('react')
-var ComboboxOption = require('../lib/option')
-var TokenInput = require('../lib/main')
+var TokenInput = require('../index')
+var ComboboxOption = require('../index').ComboboxOption
 
 var without = require('lodash-node/modern/arrays/without')
 var uniq = require('lodash-node/modern/arrays/uniq')
