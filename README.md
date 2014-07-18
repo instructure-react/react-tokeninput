@@ -1,3 +1,5 @@
+![](https://travis-ci.org/instructure/react-tokeninput.svg?branch=master)
+
 ![](http://i.imgur.com/aboKyTx.png)
 
 Adapts Ryan Florence's [react-autocomplete](https://github.com/rpflorence/react-autocomplete).
