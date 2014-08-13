@@ -105,13 +105,13 @@ body {
   margin-right: 6px;
 }
 
-.ic-token-close-button {
+.ic-token-delete-button {
   font-size: 1rem;
   margin-right: 5px;
   cursor: pointer;
 }
 
-.ic-token-close-button:hover {
+.ic-token-delete-button:hover {
   background-color: #ddd;
 }
 
