@@ -4,13 +4,13 @@ var ComboboxOption = require('react-tokeninput').Option
 
 var without = require('lodash-node/modern/arrays/without')
 var uniq = require('lodash-node/modern/arrays/uniq')
-var flavors = require('./flavors')
+var names = require('./names')
 
 var App = React.createClass({displayName: 'App',
   getInitialState: function() {
     return {
       selected: [],
-      options: flavors
+      options: names
     };
   },
 
@@ -48,7 +48,7 @@ var App = React.createClass({displayName: 'App',
     if (userInput === '')
       return this.setState({options: []});
     var filter = new RegExp('^'+userInput, 'i');
-    this.setState({options: flavors.filter(function(state) {
+    this.setState({options: names.filter(function(state) {
       return filter.test(state.name) || filter.test(state.id);
     })});
   },

@@ -13,7 +13,7 @@ gulp.task('browserify', function() {
     .pipe(gulp.dest('.'))
 })
 
-gulp.task('uglify', function () {
+gulp.task('uglify', ['browserify'], function () {
   return gulp.src(['main.js'])
     .pipe(uglify({
       output: {
