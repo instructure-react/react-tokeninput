@@ -88,7 +88,7 @@
                 }), t.DOM.h2(null, "Selected"), t.DOM.ul(null, e));
             }
         });
-        t.renderComponent(s(null), document.body);
+        t.renderComponent(s(null), document.getElementById("application"));
     }, {
         "./names": 2,
         "lodash-node/modern/arrays/uniq": 4,

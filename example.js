@@ -93,4 +93,4 @@ var App = React.createClass({displayName: 'App',
   }
 })
 
-React.renderComponent(App(null), document.body)
+React.renderComponent(App(null), document.getElementById('application'))
