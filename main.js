@@ -913,16 +913,20 @@
                     className: this.getClassName()
                 }, this.props.value, this.state.inputValue, l({
                     ref: "input",
+                    autocomplete: "off",
+                    spellcheck: "false",
+                    "aria-expanded": this.state.isOpen + "",
+                    "aria-haspopup": "true",
+                    "aria-activedescendant": this.state.menu.activedescendant,
+                    "aria-autocomplete": "list",
+                    "aria-owns": this.state.listId,
                     id: this.props.id,
                     className: "ic-tokeninput-input",
                     onChange: this.handleInputChange,
                     onBlur: this.handleInputBlur,
                     onKeyDown: this.handleKeydown,
                     onKeyUp: this.handleInputKeyUp,
-                    role: "combobox",
-                    "aria-activedescendant": this.state.menu.activedescendant,
-                    "aria-autocomplete": this.props.autocomplete,
-                    "aria-owns": this.state.listId
+                    role: "combobox"
                 }), c({
                     "aria-hidden": "true",
                     className: "ic-tokeninput-button",
@@ -931,7 +935,6 @@
                     id: this.state.listId,
                     ref: "list",
                     className: "ic-tokeninput-list",
-                    "aria-expanded": this.state.isOpen + "",
                     role: "listbox"
                 }, this.state.menu.children));
             }
@@ -983,19 +986,18 @@
                     });
                 }.bind(this));
                 return a({
-                    className: "ic-tokens",
+                    className: "ic-tokens flex",
                     onClick: this.handleClick
-                }, e, i({
-                    className: "inline-flex",
+                }, i({
+                    className: "inline-flex flex-order-2",
                     ref: "combo-li"
                 }, o({
                     id: this.props.id,
                     onInput: this.handleInput,
                     onSelect: this.handleSelect,
                     onRemoveLast: this.handleRemoveLast,
-                    autocomplete: "list",
                     value: this.state.selectedToken
-                }, this.props.menuContent)));
+                }, this.props.menuContent)), e);
             }
         });
     }, {
@@ -1020,8 +1022,8 @@
             },
             render: function() {
                 var e = this.props;
-                return e.isSelected && (e.className = o(e.className, "ic-tokeninput-selected")), 
-                r(e);
+                return e.isSelected && (e.className = o(e.className, "ic-tokeninput-selected"), 
+                e.ariaSelected = !0), r(e);
             }
         });
     }, {
@@ -1040,7 +1042,7 @@
             },
             render: function() {
                 return r({
-                    className: "ic-token inline-flex"
+                    className: "ic-token inline-flex flex-order-1"
                 }, o({
                     role: "button",
                     onClick: this.handleClick,
