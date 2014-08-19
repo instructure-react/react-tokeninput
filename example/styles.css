@@ -2,6 +2,11 @@ body {
   background-color: #F0F0F0;
 }
 
+#application {
+  width: 600px;
+  margin: auto;
+}
+
 .ic-tokeninput {
   display: inline-block;
 }
@@ -110,6 +115,7 @@ body {
   border-radius: 3px;
   cursor: text;
   position: relative;
+  will-change: transform;
 }
 
 .ic-token {
