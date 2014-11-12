@@ -1,16 +1,18 @@
 var React = require('react/addons')
 var TestUtils = React.addons.TestUtils
 
-var Tokeninput = require('../index')
+var Tokeninput = React.createFactory(require('../index'))
 
 describe('Sanity test', function() {
 
   it ('renders component', function() {
-    var result = Tokeninput({
-      selected: []
+    var tokeninput = Tokeninput({
+      selected: [],
+      onSelect: function() {},
+      onRemove: function() {}
     })
-    TestUtils.renderIntoDocument(result)
-    var ul = TestUtils.findRenderedDOMComponentWithTag(result, 'ul')
+    var instance = TestUtils.renderIntoDocument(tokeninput)
+    var ul = TestUtils.findRenderedDOMComponentWithTag(instance, 'ul')
     should.exist(ul)
   })
 

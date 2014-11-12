@@ -71,6 +71,7 @@ var App = React.createClass({
       return <li key={tag.id}>{tag.name}</li>
     })
 
+
     var options = this.state.options.length ?
       this.renderComboboxOptions() : [];
 
@@ -95,4 +96,4 @@ var App = React.createClass({
   }
 })
 
-React.renderComponent(<App/>, document.getElementById('application'))
+React.render(<App/>, document.getElementById('application'))
