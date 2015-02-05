@@ -1,8 +1,20 @@
 module.exports = {
   entry: "./example/main.js",
   output: {
-    filename: "./example/bundle.js"
+    library: 'TokenInput',
+    libraryTarget: 'umd'
   },
+
+  externals: [
+    {
+      "react": {
+        root: "React",
+        commonjs2: "react",
+        commonjs: "react",
+        amd: "react"
+      }
+    }
+  ],
   debug: true,
   devtool: '#source-map',
   module: {

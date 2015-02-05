@@ -4,6 +4,8 @@
   "description": "Tokeninput component for React",
   "main": "index.js",
   "scripts": {
+    "build": "NODE_ENV=production webpack index.js dist/react-tokeninput.js",
+    "build-min": "NODE_ENV=production webpack index.js dist/react-tokeninput.min.js --optimize-minimize",
     "test": "node_modules/.bin/karma start"
   },
   "repository": {
