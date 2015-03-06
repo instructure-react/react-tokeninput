@@ -46,6 +46,14 @@ body {
   -moz-box-sizing: border-box;
   -ms-box-sizing: border-box;
   box-sizing: border-box;
+  border: 0 none;
+  outline: 0;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.ic-token-label {
+  line-height: 20px;
 }
 
 .ic-tokeninput-button {
@@ -151,11 +159,6 @@ body {
   /* 2012 */
   display: -webkit-inline-flex;
   display: inline-flex;
-}
-
-.ic-tokeninput-input {
-  border: 0 none;
-  outline: 0;
 }
 
 .ic-tokeninput-button {
