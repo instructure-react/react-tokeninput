@@ -127,7 +127,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      li({className: 'inline-flex', ref: 'combo-li'},
 	        Combobox({
 	          id: this.props.id,
-	          'aria-label': this.props['combobox-aria-label'],
+	          ariaLabel: this.props['combobox-aria-label'],
 	          onInput: this.handleInput,
 	          onSelect: this.handleSelect,
 	          onRemoveLast: this.handleRemoveLast,
@@ -269,7 +269,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	
 	  componentWillReceiveProps: function(newProps) {
-	    this.setState({menu: this.makeMenu(newProps.children)});
+	    this.setState({menu: this.makeMenu(newProps.children)}, function() {
+	      if(newProps.children.length) {
+	        this.showList();
+	      } else {
+	        this.hideList();
+	      }
+	
+	    }.bind(this));
 	  },
 	
 	  /**
@@ -281,6 +288,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var activedescendant;
 	    var isEmpty = true;
 	    children = children || this.props.children;
+	
+	    // Should this instead use React.addons.cloneWithProps or React.cloneElement?
 	    React.Children.forEach(children, function(child, index) {
 	      if (child.type !== ComboboxOption.type)
 	        // allow random elements to live in this list
@@ -300,10 +309,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      props.onKeyDown = this.handleOptionKeyDown.bind(this, child);
 	      props.onMouseEnter = this.handleOptionMouseEnter.bind(this, index);
 	    }.bind(this));
-	
-	    if(isEmpty) {
-	      this.hideList();
-	    }
 	
 	    return {
 	      children: children,
@@ -337,8 +342,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var value = this.refs.input.getDOMNode().value;
 	    this.clearSelectedState(function() {
 	      this.props.onInput(value);
-	      if (!this.state.isOpen)
-	        this.showList();
 	    }.bind(this));
 	  },
 	
@@ -375,6 +378,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	
 	  showList: function() {
+	    if(!this.state.menu.children.length) {
+	      return
+	    }
 	    this.setState({isOpen: true})
 	  },
 	
@@ -651,5 +657,5 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ }
 /******/ ])
 });
-
+;
 //# sourceMappingURL=react-tokeninput.js.map
