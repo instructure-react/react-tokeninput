@@ -1,18 +1,16 @@
-/** @jsx React.DOM */
-
 var React = require('react')
 var TokenInput = require('../index')
 var ComboboxOption = require('../index').Option
 
 var without = require('lodash-node/modern/arrays/without')
 var uniq = require('lodash-node/modern/arrays/uniq')
-var flavors = require('./flavors')
+var names = require('./names')
 
 var App = React.createClass({
   getInitialState: function() {
     return {
       selected: [],
-      options: flavors
+      options: names
     };
   },
 
@@ -50,18 +48,18 @@ var App = React.createClass({
     if (userInput === '')
       return this.setState({options: []});
     var filter = new RegExp('^'+userInput, 'i');
-    this.setState({options: flavors.filter(function(state) {
+    this.setState({options: names.filter(function(state) {
       return filter.test(state.name) || filter.test(state.id);
     })});
   },
 
   renderComboboxOptions: function() {
-    return this.state.options.map(function(flavor) {
+    return this.state.options.map(function(name) {
       return (
         <ComboboxOption
-          key={flavor.id}
-          value={flavor}
-        >{flavor.name}</ComboboxOption>
+          key={name.id}
+          value={name}
+        >{name.name}</ComboboxOption>
       );
     });
   },

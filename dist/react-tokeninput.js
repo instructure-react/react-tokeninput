@@ -270,7 +270,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  componentWillReceiveProps: function(newProps) {
 	    this.setState({menu: this.makeMenu(newProps.children)}, function() {
-	      if(newProps.children.length) {
+	      if(newProps.children.length && (this.isOpen || document.activeElement === this.refs.input.getDOMNode())) {
 	        this.showList();
 	      } else {
 	        this.hideList();

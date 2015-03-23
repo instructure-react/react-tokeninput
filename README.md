@@ -9,8 +9,13 @@ See example implementation in `example/`.
 ## Development
 
 ```
-chmod u+x ./script/dev
-./script/dev
+npm run dev
+```
+
+## Build
+
+```
+npm run build
 ```
 
 ## Test
