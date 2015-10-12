@@ -1,4 +1,5 @@
 var React = require('react')
+var ReactDOM = require('react-dom')
 var TokenInput = require('../index')
 var ComboboxOption = require('../index').Option
 
@@ -94,4 +95,4 @@ var App = React.createClass({
   }
 })
 
-React.render(<App/>, document.getElementById('application'))
+ReactDOM.render(<App/>, document.getElementById('application'))
