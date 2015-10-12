@@ -1,5 +1,5 @@
 var React = require('react/addons')
-var TestUtils = React.addons.TestUtils
+var TestUtils = require('react-addons-test-utils')
 
 var Tokeninput = React.createFactory(require('../index'))
 
