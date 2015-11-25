@@ -20,8 +20,11 @@
   "homepage": "https://github.com/instructure/react-tokeninput",
   "devDependencies": {
     "babel-core": "^4.7.16",
+    "babel-eslint": "^4.1.5",
     "babel-loader": "^4.2.0",
     "chai": "^1.10.0",
+    "eslint": "^1.10.1",
+    "jsx-loader": "^0.13.2",
     "karma": "^0.12.24",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^0.1.5",
