@@ -67,13 +67,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	var TokenInput = __webpack_require__(149)
 	var ComboboxOption = __webpack_require__(149).Option
 	
-	var without = __webpack_require__(155)
-	var uniq = __webpack_require__(168)
-	var names = __webpack_require__(193)
+	var without = __webpack_require__(156)
+	var uniq = __webpack_require__(169)
+	var names = __webpack_require__(194)
 	
 	var App = React.createClass({displayName: "App",
 	  getInitialState: function() {
 	    return {
+	      input: '',
+	      loading: false,
 	      selected: [],
 	      options: names
 	    };
@@ -105,17 +107,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	
 	  handleInput: function(userInput) {
-	    // this.setState({selectedStateId: null});
-	    this.filterTags(userInput);
+	    this.setState({
+	      input: userInput,
+	      loading: true,
+	      options: []
+	    })
+	    setTimeout(function () {
+	      this.filterTags(this.state.input)
+	      this.setState({
+	        loading: false
+	      })
+	    }.bind(this), 500)
 	  },
 	
 	  filterTags: function(userInput) {
 	    if (userInput === '')
 	      return this.setState({options: []});
 	    var filter = new RegExp('^'+userInput, 'i');
-	    this.setState({options: names.filter(function(state) {
-	      return filter.test(state.name) || filter.test(state.id);
-	    })});
+	    var filteredNames = names.filter(function(state) {
+	      return filter.test(state.name); // || filter.test(state.id);
+	    }).filter(function(state) {
+	      return this.state.selected
+	        .map(function(value) { return value.name })
+	        .indexOf(state.name) === -1
+	    }.bind(this))
+	    this.setState({
+	      options: filteredNames
+	    });
 	  },
 	
 	  renderComboboxOptions: function() {
@@ -130,29 +148,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	
 	  render: function() {
-	    var selectedFlavors = this.state.selected.map(function(tag) {
+	    var selectedNames = this.state.selected.map(function(tag) {
 	      return React.createElement("li", {key: tag.id}, tag.name)
 	    })
 	
-	
 	    var options = this.state.options.length ?
 	      this.renderComboboxOptions() : [];
+	
+	    const loadingComponent = (
+	      React.createElement("img", {src: "spinner.gif"})
+	    )
 	
 	    return (
 	      React.createElement("div", null, 
 	        React.createElement("h1", null, "React TokenInput Example"), 
 	
 	        React.createElement(TokenInput, {
+	            isLoading: this.state.loading, 
+	            loadingComponent: loadingComponent, 
+	            menuContent: options, 
 	            onChange: this.handleChange, 
 	            onInput: this.handleInput, 
 	            onSelect: this.handleSelect, 
 	            onRemove: this.handleRemove, 
-	            selected: this.state.selected, 
-	            menuContent: options}), 
+	            selected: this.state.selected}
+	          ), 
 	
 	        React.createElement("h2", null, "Selected"), 
 	        React.createElement("ul", null, 
-	          selectedFlavors
+	          selectedNames
 	        )
 	      )
 	    );
@@ -1138,7 +1162,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * will remain to ensure logic does not differ in production.
 	 */
 	
-	var invariant = function (condition, format, a, b, c, d, e, f) {
+	function invariant(condition, format, a, b, c, d, e, f) {
 	  if (process.env.NODE_ENV !== 'production') {
 	    if (format === undefined) {
 	      throw new Error('invariant requires an error message argument');
@@ -1152,15 +1176,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    } else {
 	      var args = [a, b, c, d, e, f];
 	      var argIndex = 0;
-	      error = new Error('Invariant Violation: ' + format.replace(/%s/g, function () {
+	      error = new Error(format.replace(/%s/g, function () {
 	        return args[argIndex++];
 	      }));
+	      error.name = 'Invariant Violation';
 	    }
 	
 	    error.framesToPop = 1; // we don't care about invariant's own frame
 	    throw error;
 	  }
-	};
+	}
 	
 	module.exports = invariant;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
@@ -10524,6 +10549,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    multiple: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
 	    muted: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
 	    name: null,
+	    nonce: MUST_USE_ATTRIBUTE,
 	    noValidate: HAS_BOOLEAN_VALUE,
 	    open: HAS_BOOLEAN_VALUE,
 	    optimum: null,
@@ -10535,6 +10561,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    readOnly: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
 	    rel: null,
 	    required: HAS_BOOLEAN_VALUE,
+	    reversed: HAS_BOOLEAN_VALUE,
 	    role: MUST_USE_ATTRIBUTE,
 	    rows: MUST_USE_ATTRIBUTE | HAS_POSITIVE_NUMERIC_VALUE,
 	    rowSpan: null,
@@ -10585,8 +10612,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     */
 	    // autoCapitalize and autoCorrect are supported in Mobile Safari for
 	    // keyboard hints.
-	    autoCapitalize: null,
-	    autoCorrect: null,
+	    autoCapitalize: MUST_USE_ATTRIBUTE,
+	    autoCorrect: MUST_USE_ATTRIBUTE,
 	    // autoSave allows WebKit/Blink to persist values of input fields on page reloads
 	    autoSave: null,
 	    // color is for Safari mask-icon link
@@ -10617,9 +10644,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    httpEquiv: 'http-equiv'
 	  },
 	  DOMPropertyNames: {
-	    autoCapitalize: 'autocapitalize',
 	    autoComplete: 'autocomplete',
-	    autoCorrect: 'autocorrect',
 	    autoFocus: 'autofocus',
 	    autoPlay: 'autoplay',
 	    autoSave: 'autosave',
@@ -13698,7 +13723,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var value = LinkedValueUtils.getValue(props);
 	
 	    if (value != null) {
-	      updateOptions(this, props, value);
+	      updateOptions(this, Boolean(props.multiple), value);
 	    }
 	  }
 	}
@@ -16733,11 +16758,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @typechecks
 	 */
 	
+	/* eslint-disable fb-www/typeof-undefined */
+	
 	/**
 	 * Same as document.activeElement but wraps in a try-catch block. In IE it is
 	 * not safe to call document.activeElement if there is nothing focused.
 	 *
-	 * The activeElement will be null only if the document or document body is not yet defined.
+	 * The activeElement will be null only if the document or document body is not
+	 * yet defined.
 	 */
 	'use strict';
 	
@@ -16745,7 +16773,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (typeof document === 'undefined') {
 	    return null;
 	  }
-	
 	  try {
 	    return document.activeElement || document.body;
 	  } catch (e) {
@@ -18485,7 +18512,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  'setValueForProperty': 'update attribute',
 	  'setValueForAttribute': 'update attribute',
 	  'deleteValueForProperty': 'remove attribute',
-	  'dangerouslyReplaceNodeWithMarkupByID': 'replace'
+	  'setValueForStyles': 'update styles',
+	  'replaceNodeWithMarkup': 'replace',
+	  'updateTextContent': 'set textContent'
 	};
 	
 	function getTotalTime(measurements) {
@@ -18677,18 +18706,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 	
 	var performance = __webpack_require__(146);
-	var curPerformance = performance;
+	
+	var performanceNow;
 	
 	/**
 	 * Detect if we can use `window.performance.now()` and gracefully fallback to
 	 * `Date.now()` if it doesn't exist. We need to support Firefox < 15 for now
 	 * because of Facebook's testing infrastructure.
 	 */
-	if (!curPerformance || !curPerformance.now) {
-	  curPerformance = Date;
+	if (performance.now) {
+	  performanceNow = function () {
+	    return performance.now();
+	  };
+	} else {
+	  performanceNow = function () {
+	    return Date.now();
+	  };
 	}
-	
-	var performanceNow = curPerformance.now.bind(curPerformance);
 	
 	module.exports = performanceNow;
 
@@ -18737,7 +18771,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	'use strict';
 	
-	module.exports = '0.14.2';
+	module.exports = '0.14.6';
 
 /***/ },
 /* 148 */
@@ -18777,12 +18811,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	var React = __webpack_require__(2);
 	var Combobox = React.createFactory(__webpack_require__(151));
 	var Token = React.createFactory(__webpack_require__(154));
+	var classnames = __webpack_require__(155);
 	
-	var ul = React.createFactory('ul');
-	var li = React.createFactory('li');
+	var ul = React.DOM.ul;
+	var li = React.DOM.li;
 	
 	module.exports = React.createClass({displayName: "module.exports",
 	  propTypes: {
+	    isLoading: React.PropTypes.bool,
+	    loadingComponent: React.PropTypes.any,
 	    onInput: React.PropTypes.func,
 	    onSelect: React.PropTypes.func.isRequired,
 	    onRemove: React.PropTypes.func.isRequired,
@@ -18802,20 +18839,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.refs['combo-li'].querySelector('input').focus();
 	  },
 	
-	  handleInput: function(event) {
-	    this.props.onInput(event);
+	  handleInput: function(inputValue) {
+	    this.props.onInput(inputValue);
 	  },
 	
 	  handleSelect: function(event) {
+	    var input = this.refs['combo-li'].querySelector('input');
 	    this.props.onSelect(event)
 	    this.setState({
 	      selectedToken: null
 	    })
+	    this.props.onInput(input.value);
 	  },
 	
 	  handleRemove: function(value) {
+	    var input = this.refs['combo-li'].querySelector('input');
 	    this.props.onRemove(value);
-	    this.refs['combo-li'].querySelector('input').focus();
+	    input.focus();
 	  },
 	
 	  handleRemoveLast: function() {
@@ -18823,6 +18863,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	
 	  render: function() {
+	    var isDisabled = this.props.isDisabled;
 	    var tokens = this.props.selected.map(function(token) {
 	      return (
 	        Token({
@@ -18833,21 +18874,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	      )
 	    }.bind(this))
 	
-	    return ul({className: 'ic-tokens flex', onClick: this.handleClick},
+	    var classes = classnames('ic-tokens flex', {
+	      'ic-tokens-disabled': isDisabled
+	    });
+	
+	    return ul({className: classes, onClick: this.handleClick},
 	      tokens,
 	      li({className: 'inline-flex', ref: 'combo-li'},
 	        Combobox({
 	          id: this.props.id,
 	          ariaLabel: this.props['combobox-aria-label'],
+	          ariaDisabled: isDisabled,
 	          onInput: this.handleInput,
 	          showListOnFocus: this.props.showListOnFocus,
 	          onSelect: this.handleSelect,
 	          onRemoveLast: this.handleRemoveLast,
-	          value: this.state.selectedToken
+	          value: this.state.selectedToken,
+	          isDisabled: isDisabled
 	        },
 	          this.props.menuContent
 	        )
-	      )
+	      ),
+	      this.props.isLoading && li({className: 'ic-tokeninput-loading flex'}, this.props.loadingComponent)
 	    );
 	  }
 	})
@@ -18926,13 +18974,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	
 	  componentWillMount: function() {
-	    this.setState({menu: this.makeMenu()});
+	    this.setState({menu: this.makeMenu(this.props.children)});
 	  },
 	
 	  componentWillReceiveProps: function(newProps) {
 	    this.setState({menu: this.makeMenu(newProps.children)}, function() {
 	      if(newProps.children.length && (this.isOpen || document.activeElement === this.refs.input)) {
-	        this.showList();
+	        if(!this.state.menu.children.length) {
+	          return
+	        }
+	        this.setState({
+	          isOpen: true
+	        }, function() {
+	          this.refs.list.scrollTop = 0;
+	        }.bind(this))
 	      } else {
 	        this.hideList();
 	      }
@@ -18948,15 +19003,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  makeMenu: function(children) {
 	    var activedescendant;
 	    var isEmpty = true;
-	    children = children || this.props.children;
 	
 	    // Should this instead use React.addons.cloneWithProps or React.cloneElement?
 	    var _children = React.Children.map(children, function(child, index) {
-	      if (child.type !== ComboboxOption)
+	      // console.log(child.type, ComboboxOption.type)
+	      if (child.type !== ComboboxOption) {
 	        // allow random elements to live in this list
 	        return;
+	      }
 	      isEmpty = false;
 	      // TODO: cloneWithProps and map instead of altering the children in-place
+	      var props = child.props;
 	      var newProps = {};
 	      if (this.state.value === child.props.value) {
 	        // need an ID for WAI-ARIA
@@ -19001,7 +19058,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, cb);
 	  },
 	
-	  handleInputChange: function(event) {
+	  handleInputChange: function() {
 	    var value = this.refs.input.value;
 	    this.clearSelectedState(function() {
 	      this.props.onInput(value);
@@ -19247,6 +19304,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        'aria-autocomplete': 'list',
 	        'aria-owns': this.state.listId,
 	        id: this.props.id,
+	        disabled: this.props.isDisabled,
 	        className: 'ic-tokeninput-input',
 	        onFocus: this.handleInputFocus,
 	        onClick: this.handleInputClick,
@@ -19387,6 +19445,60 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 155 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2016 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+	/* global define */
+	
+	(function () {
+		'use strict';
+	
+		var hasOwn = {}.hasOwnProperty;
+	
+		function classNames () {
+			var classes = [];
+	
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
+	
+				var argType = typeof arg;
+	
+				if (argType === 'string' || argType === 'number') {
+					classes.push(arg);
+				} else if (Array.isArray(arg)) {
+					classes.push(classNames.apply(null, arg));
+				} else if (argType === 'object') {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				}
+			}
+	
+			return classes.join(' ');
+		}
+	
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = classNames;
+		} else if (true) {
+			// register as 'classnames', consistent with npm package name
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return classNames;
+			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else {
+			window.classNames = classNames;
+		}
+	}());
+
+
+/***/ },
+/* 156 */
+/***/ function(module, exports, __webpack_require__) {
+
 	/**
 	 * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
 	 * Build: `lodash modularize modern exports="node" -o ./modern/`
@@ -19395,8 +19507,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var baseDifference = __webpack_require__(156),
-	    slice = __webpack_require__(167);
+	var baseDifference = __webpack_require__(157),
+	    slice = __webpack_require__(168);
 	
 	/**
 	 * Creates an array excluding all provided values using strict equality for
@@ -19421,7 +19533,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 156 */
+/* 157 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -19432,11 +19544,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var baseIndexOf = __webpack_require__(157),
-	    cacheIndexOf = __webpack_require__(158),
-	    createCache = __webpack_require__(160),
-	    largeArraySize = __webpack_require__(166),
-	    releaseObject = __webpack_require__(164);
+	var baseIndexOf = __webpack_require__(158),
+	    cacheIndexOf = __webpack_require__(159),
+	    createCache = __webpack_require__(161),
+	    largeArraySize = __webpack_require__(167),
+	    releaseObject = __webpack_require__(165);
 	
 	/**
 	 * The base implementation of `_.difference` that accepts a single array
@@ -19479,7 +19591,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 157 */
+/* 158 */
 /***/ function(module, exports) {
 
 	/**
@@ -19517,7 +19629,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 158 */
+/* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -19528,8 +19640,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var baseIndexOf = __webpack_require__(157),
-	    keyPrefix = __webpack_require__(159);
+	var baseIndexOf = __webpack_require__(158),
+	    keyPrefix = __webpack_require__(160);
 	
 	/**
 	 * An implementation of `_.contains` for cache objects that mimics the return
@@ -19562,7 +19674,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 159 */
+/* 160 */
 /***/ function(module, exports) {
 
 	/**
@@ -19581,7 +19693,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 160 */
+/* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -19592,9 +19704,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var cachePush = __webpack_require__(161),
-	    getObject = __webpack_require__(162),
-	    releaseObject = __webpack_require__(164);
+	var cachePush = __webpack_require__(162),
+	    getObject = __webpack_require__(163),
+	    releaseObject = __webpack_require__(165);
 	
 	/**
 	 * Creates a cache object to optimize linear searches of large arrays.
@@ -19632,7 +19744,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 161 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -19643,7 +19755,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var keyPrefix = __webpack_require__(159);
+	var keyPrefix = __webpack_require__(160);
 	
 	/**
 	 * Adds a given value to the corresponding cache object.
@@ -19676,7 +19788,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 162 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -19687,7 +19799,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var objectPool = __webpack_require__(163);
+	var objectPool = __webpack_require__(164);
 	
 	/**
 	 * Gets an object from the object pool or creates a new one if the pool is empty.
@@ -19717,7 +19829,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 163 */
+/* 164 */
 /***/ function(module, exports) {
 
 	/**
@@ -19736,7 +19848,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 164 */
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -19747,8 +19859,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var maxPoolSize = __webpack_require__(165),
-	    objectPool = __webpack_require__(163);
+	var maxPoolSize = __webpack_require__(166),
+	    objectPool = __webpack_require__(164);
 	
 	/**
 	 * Releases the given object back to the object pool.
@@ -19771,7 +19883,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 165 */
+/* 166 */
 /***/ function(module, exports) {
 
 	/**
@@ -19790,7 +19902,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 166 */
+/* 167 */
 /***/ function(module, exports) {
 
 	/**
@@ -19809,7 +19921,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 167 */
+/* 168 */
 /***/ function(module, exports) {
 
 	/**
@@ -19853,7 +19965,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 168 */
+/* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -19864,8 +19976,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var baseUniq = __webpack_require__(169),
-	    createCallback = __webpack_require__(173);
+	var baseUniq = __webpack_require__(170),
+	    createCallback = __webpack_require__(174);
 	
 	/**
 	 * Creates a duplicate-value-free version of an array using strict equality
@@ -19928,7 +20040,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 169 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -19939,13 +20051,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var baseIndexOf = __webpack_require__(157),
-	    cacheIndexOf = __webpack_require__(158),
-	    createCache = __webpack_require__(160),
-	    getArray = __webpack_require__(170),
-	    largeArraySize = __webpack_require__(166),
-	    releaseArray = __webpack_require__(172),
-	    releaseObject = __webpack_require__(164);
+	var baseIndexOf = __webpack_require__(158),
+	    cacheIndexOf = __webpack_require__(159),
+	    createCache = __webpack_require__(161),
+	    getArray = __webpack_require__(171),
+	    largeArraySize = __webpack_require__(167),
+	    releaseArray = __webpack_require__(173),
+	    releaseObject = __webpack_require__(165);
 	
 	/**
 	 * The base implementation of `_.uniq` without support for callback shorthands
@@ -19998,7 +20110,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 170 */
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -20009,7 +20121,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var arrayPool = __webpack_require__(171);
+	var arrayPool = __webpack_require__(172);
 	
 	/**
 	 * Gets an array from the array pool or creates a new one if the pool is empty.
@@ -20025,7 +20137,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 171 */
+/* 172 */
 /***/ function(module, exports) {
 
 	/**
@@ -20044,7 +20156,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 172 */
+/* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -20055,8 +20167,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var arrayPool = __webpack_require__(171),
-	    maxPoolSize = __webpack_require__(165);
+	var arrayPool = __webpack_require__(172),
+	    maxPoolSize = __webpack_require__(166);
 	
 	/**
 	 * Releases the given array back to the array pool.
@@ -20075,7 +20187,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 173 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -20086,11 +20198,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var baseCreateCallback = __webpack_require__(174),
-	    baseIsEqual = __webpack_require__(188),
-	    isObject = __webpack_require__(180),
-	    keys = __webpack_require__(190),
-	    property = __webpack_require__(192);
+	var baseCreateCallback = __webpack_require__(175),
+	    baseIsEqual = __webpack_require__(189),
+	    isObject = __webpack_require__(181),
+	    keys = __webpack_require__(191),
+	    property = __webpack_require__(193);
 	
 	/**
 	 * Produces a callback bound to an optional `thisArg`. If `func` is a property
@@ -20162,7 +20274,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 174 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -20173,10 +20285,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var bind = __webpack_require__(175),
-	    identity = __webpack_require__(186),
-	    setBindData = __webpack_require__(183),
-	    support = __webpack_require__(187);
+	var bind = __webpack_require__(176),
+	    identity = __webpack_require__(187),
+	    setBindData = __webpack_require__(184),
+	    support = __webpack_require__(188);
 	
 	/** Used to detected named functions */
 	var reFuncName = /^\s*function[ \n\r\t]+\w/;
@@ -20248,7 +20360,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 175 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -20259,8 +20371,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var createWrapper = __webpack_require__(176),
-	    slice = __webpack_require__(167);
+	var createWrapper = __webpack_require__(177),
+	    slice = __webpack_require__(168);
 	
 	/**
 	 * Creates a function that, when called, invokes `func` with the `this`
@@ -20294,7 +20406,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 176 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -20305,10 +20417,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var baseBind = __webpack_require__(177),
-	    baseCreateWrapper = __webpack_require__(184),
-	    isFunction = __webpack_require__(185),
-	    slice = __webpack_require__(167);
+	var baseBind = __webpack_require__(178),
+	    baseCreateWrapper = __webpack_require__(185),
+	    isFunction = __webpack_require__(186),
+	    slice = __webpack_require__(168);
 	
 	/**
 	 * Used for `Array` method references.
@@ -20406,7 +20518,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 177 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -20417,10 +20529,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var baseCreate = __webpack_require__(178),
-	    isObject = __webpack_require__(180),
-	    setBindData = __webpack_require__(183),
-	    slice = __webpack_require__(167);
+	var baseCreate = __webpack_require__(179),
+	    isObject = __webpack_require__(181),
+	    setBindData = __webpack_require__(184),
+	    slice = __webpack_require__(168);
 	
 	/**
 	 * Used for `Array` method references.
@@ -20474,7 +20586,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 178 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -20485,9 +20597,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var isNative = __webpack_require__(179),
-	    isObject = __webpack_require__(180),
-	    noop = __webpack_require__(182);
+	var isNative = __webpack_require__(180),
+	    isObject = __webpack_require__(181),
+	    noop = __webpack_require__(183);
 	
 	/* Native method shortcuts for methods with the same name as other `lodash` methods */
 	var nativeCreate = isNative(nativeCreate = Object.create) && nativeCreate;
@@ -20523,7 +20635,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 179 */
+/* 180 */
 /***/ function(module, exports) {
 
 	/**
@@ -20563,7 +20675,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 180 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -20574,7 +20686,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var objectTypes = __webpack_require__(181);
+	var objectTypes = __webpack_require__(182);
 	
 	/**
 	 * Checks if `value` is the language type of Object.
@@ -20608,7 +20720,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 181 */
+/* 182 */
 /***/ function(module, exports) {
 
 	/**
@@ -20634,7 +20746,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 182 */
+/* 183 */
 /***/ function(module, exports) {
 
 	/**
@@ -20666,7 +20778,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 183 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -20677,8 +20789,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var isNative = __webpack_require__(179),
-	    noop = __webpack_require__(182);
+	var isNative = __webpack_require__(180),
+	    noop = __webpack_require__(183);
 	
 	/** Used as the property descriptor for `__bindData__` */
 	var descriptor = {
@@ -20715,7 +20827,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 184 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -20726,10 +20838,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var baseCreate = __webpack_require__(178),
-	    isObject = __webpack_require__(180),
-	    setBindData = __webpack_require__(183),
-	    slice = __webpack_require__(167);
+	var baseCreate = __webpack_require__(179),
+	    isObject = __webpack_require__(181),
+	    setBindData = __webpack_require__(184),
+	    slice = __webpack_require__(168);
 	
 	/**
 	 * Used for `Array` method references.
@@ -20799,7 +20911,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 185 */
+/* 186 */
 /***/ function(module, exports) {
 
 	/**
@@ -20832,7 +20944,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 186 */
+/* 187 */
 /***/ function(module, exports) {
 
 	/**
@@ -20866,7 +20978,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 187 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -20877,7 +20989,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var isNative = __webpack_require__(179);
+	var isNative = __webpack_require__(180);
 	
 	/** Used to detect functions containing a `this` reference */
 	var reThis = /\bthis\b/;
@@ -20913,7 +21025,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 188 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -20924,11 +21036,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var forIn = __webpack_require__(189),
-	    getArray = __webpack_require__(170),
-	    isFunction = __webpack_require__(185),
-	    objectTypes = __webpack_require__(181),
-	    releaseArray = __webpack_require__(172);
+	var forIn = __webpack_require__(190),
+	    getArray = __webpack_require__(171),
+	    isFunction = __webpack_require__(186),
+	    objectTypes = __webpack_require__(182),
+	    releaseArray = __webpack_require__(173);
 	
 	/** `Object#toString` result shortcuts */
 	var argsClass = '[object Arguments]',
@@ -21128,7 +21240,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 189 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -21139,8 +21251,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var baseCreateCallback = __webpack_require__(174),
-	    objectTypes = __webpack_require__(181);
+	var baseCreateCallback = __webpack_require__(175),
+	    objectTypes = __webpack_require__(182);
 	
 	/**
 	 * Iterates over own and inherited enumerable properties of an object,
@@ -21188,7 +21300,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 190 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -21199,9 +21311,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var isNative = __webpack_require__(179),
-	    isObject = __webpack_require__(180),
-	    shimKeys = __webpack_require__(191);
+	var isNative = __webpack_require__(180),
+	    isObject = __webpack_require__(181),
+	    shimKeys = __webpack_require__(192);
 	
 	/* Native method shortcuts for methods with the same name as other `lodash` methods */
 	var nativeKeys = isNative(nativeKeys = Object.keys) && nativeKeys;
@@ -21230,7 +21342,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 191 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -21241,7 +21353,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <http://lodash.com/license>
 	 */
-	var objectTypes = __webpack_require__(181);
+	var objectTypes = __webpack_require__(182);
 	
 	/** Used for native method references */
 	var objectProto = Object.prototype;
@@ -21274,7 +21386,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 192 */
+/* 193 */
 /***/ function(module, exports) {
 
 	/**
@@ -21320,7 +21432,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 193 */
+/* 194 */
 /***/ function(module, exports) {
 
 	module.exports = [
