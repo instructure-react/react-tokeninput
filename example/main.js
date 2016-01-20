@@ -1,4 +1,5 @@
 var React = require('react')
+var ReactDOM = require('react-dom')
 var TokenInput = require('../index')
 var ComboboxOption = require('../index').Option
 
@@ -59,14 +60,15 @@ var App = React.createClass({
     if (userInput === '')
       return this.setState({options: []});
     var filter = new RegExp('^'+userInput, 'i');
+    var filteredNames = names.filter(function(state) {
+      return filter.test(state.name); // || filter.test(state.id);
+    }).filter(function(state) {
+      return this.state.selected
+        .map(function(value) { return value.name })
+        .indexOf(state.name) === -1
+    }.bind(this))
     this.setState({
-      options: names.filter(function(state) {
-        return filter.test(state.name); // || filter.test(state.id);
-      }).filter(function(state) {
-        return this.state.selected
-          .map(function(value) { return value.name })
-          .indexOf(state.name) === -1
-      }.bind(this))
+      options: filteredNames
     });
   },
 
@@ -82,7 +84,7 @@ var App = React.createClass({
   },
 
   render: function() {
-    var selectedFlavors = this.state.selected.map(function(tag) {
+    var selectedNames = this.state.selected.map(function(tag) {
       return <li key={tag.id}>{tag.name}</li>
     })
 
@@ -110,11 +112,11 @@ var App = React.createClass({
 
         <h2>Selected</h2>
         <ul>
-          {selectedFlavors}
+          {selectedNames}
         </ul>
       </div>
     );
   }
 })
 
-React.render(<App/>, document.getElementById('application'))
+ReactDOM.render(<App/>, document.getElementById('application'))
