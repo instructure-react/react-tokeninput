@@ -171,7 +171,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            onInput: this.handleInput, 
 	            onSelect: this.handleSelect, 
 	            onRemove: this.handleRemove, 
-	            selected: this.state.selected}
+	            selected: this.state.selected, 
+	            placeholder: "Enter tokens here"}
 	          ), 
 	
 	        React.createElement("h2", null, "Selected"), 
@@ -9404,6 +9405,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	var EventInterface = {
 	  type: null,
+	  target: null,
 	  // currentTarget is set when dispatching; no use in copying it here
 	  currentTarget: emptyFunction.thatReturnsNull,
 	  eventPhase: null,
@@ -9437,8 +9439,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  this.dispatchConfig = dispatchConfig;
 	  this.dispatchMarker = dispatchMarker;
 	  this.nativeEvent = nativeEvent;
-	  this.target = nativeEventTarget;
-	  this.currentTarget = nativeEventTarget;
 	
 	  var Interface = this.constructor.Interface;
 	  for (var propName in Interface) {
@@ -9449,7 +9449,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (normalize) {
 	      this[propName] = normalize(nativeEvent);
 	    } else {
-	      this[propName] = nativeEvent[propName];
+	      if (propName === 'target') {
+	        this.target = nativeEventTarget;
+	      } else {
+	        this[propName] = nativeEvent[propName];
+	      }
 	    }
 	  }
 	
@@ -13298,7 +13302,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    });
 	
-	    nativeProps.children = content;
+	    if (content) {
+	      nativeProps.children = content;
+	    }
+	
 	    return nativeProps;
 	  }
 	
@@ -18771,7 +18778,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	'use strict';
 	
-	module.exports = '0.14.6';
+	module.exports = '0.14.7';
 
 /***/ },
 /* 148 */
@@ -18825,7 +18832,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    onRemove: React.PropTypes.func.isRequired,
 	    selected: React.PropTypes.array.isRequired,
 	    menuContent: React.PropTypes.any,
-	    showListOnFocus: React.PropTypes.bool
+	    showListOnFocus: React.PropTypes.bool,
+	    placeholder: React.PropTypes.string
 	  },
 	
 	  getInitialState: function() {
@@ -18890,7 +18898,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          onSelect: this.handleSelect,
 	          onRemoveLast: this.handleRemoveLast,
 	          value: this.state.selectedToken,
-	          isDisabled: isDisabled
+	          isDisabled: isDisabled,
+	          placeholder: this.props.placeholder
 	        },
 	          this.props.menuContent
 	        )
@@ -18940,7 +18949,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * function(selectedValue){}
 	     * ```
 	    */
-	    onSelect: React.PropTypes.func
+	    onSelect: React.PropTypes.func,
+	
+	    /**
+	     * Shown when the combobox is empty.
+	    */
+	    placeholder: React.PropTypes.string
 	  },
 	
 	  getDefaultProps: function() {
@@ -19312,6 +19326,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        onBlur: this.handleInputBlur,
 	        onKeyDown: this.handleKeydown,
 	        onKeyUp: this.handleInputKeyUp,
+	        placeholder: this.props.placeholder,
 	        role: 'combobox'
 	      }),
 	      span({
