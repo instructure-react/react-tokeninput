@@ -108,6 +108,7 @@ var App = React.createClass({
             onSelect={this.handleSelect}
             onRemove={this.handleRemove}
             selected={this.state.selected}
+            placeholder='Enter tokens here'
           />
 
         <h2>Selected</h2>
