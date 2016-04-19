@@ -18960,7 +18960,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * function(selectedValue){}
 	     * ```
 	    */
-	   
+	
 	    onSelect: React.PropTypes.func,
 	    /**
 	     * alled when the combobox receives an empty selection.
@@ -19220,7 +19220,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  selectOnEnter: function(event) {
 	    event.preventDefault();
-	    if (this.refs.input.value === '') {
+	    if (this.refs.input.value === '' && this.props.onSubmit !== null) {
 	      //submit on enter
 	      this.props.onSubmit();
 	    }
