@@ -1,115 +1,116 @@
-var React = require('react')
-var ReactDOM = require('react-dom')
-var TokenInput = require('../index')
-var ComboboxOption = require('../index').Option
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TokenInput, {Option as ComboboxOption} from '../index';
 
-var without = require('lodash-node/modern/arrays/without')
-var uniq = require('lodash-node/modern/arrays/uniq')
-var names = require('./names')
+import without from 'lodash/without';
+import uniq from 'lodash/uniq';
+import names from './names';
 
-var App = React.createClass({
-  getInitialState: function() {
-    return {
+class App extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleInput = this.handleInput.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
+
+    this.state = {
       input: '',
       loading: false,
       selected: [],
-      options: names
+      options: names,
     };
-  },
+  }
 
-  handleChange: function(value) {
+  handleChange(value) {
     this.setState({
-      selected: value
-    })
-  },
+      selected: value,
+    });
+  }
 
-  handleRemove: function(value) {
-    var selectedOptions = uniq(without(this.state.selected,value))
-    this.handleChange(selectedOptions)
-  },
+  handleRemove(value) {
+    const selectedOptions = uniq(without(this.state.selected, value));
+    this.handleChange(selectedOptions);
+  }
 
-  handleSelect: function(value, combobox) {
-    if(typeof value === 'string') {
-      value = {id: value, name: value};
+  handleSelect(newValue) {
+    let value = newValue;
+
+    if (typeof value === 'string') {
+      value = { id: value, name: value };
     }
 
-    var selected = uniq(this.state.selected.concat([value]))
+    const selected = uniq(this.state.selected.concat([value]));
     this.setState({
-      selected: selected,
-      selectedToken: null
-    })
+      selected,
+      selectedToken: null,
+    });
 
-    this.handleChange(selected)
-  },
+    this.handleChange(selected);
+  }
 
-  handleInput: function(userInput) {
+  handleInput(userInput) {
     this.setState({
       input: userInput,
       loading: true,
-      options: []
-    })
-    setTimeout(function () {
-      this.filterTags(this.state.input)
-      this.setState({
-        loading: false
-      })
-    }.bind(this), 500)
-  },
-
-  filterTags: function(userInput) {
-    if (userInput === '')
-      return this.setState({options: []});
-    var filter = new RegExp('^'+userInput, 'i');
-    var filteredNames = names.filter(function(state) {
-      return filter.test(state.name); // || filter.test(state.id);
-    }).filter(function(state) {
-      return this.state.selected
-        .map(function(value) { return value.name })
-        .indexOf(state.name) === -1
-    }.bind(this))
-    this.setState({
-      options: filteredNames
+      options: [],
     });
-  },
 
-  renderComboboxOptions: function() {
-    return this.state.options.map(function(name) {
-      return (
-        <ComboboxOption
-          key={name.id}
-          value={name}
-        >{name.name}</ComboboxOption>
+    setTimeout(() => {
+      this.filterTags(this.state.input);
+      this.setState({ loading: false });
+    }, 500);
+  }
+
+  filterTags(userInput) {
+    if (userInput === '') {
+      this.setState({ options: [] });
+      return;
+    }
+
+    const filter = new RegExp(`^${userInput}`, 'i');
+    const filteredNames = names.filter(state => filter.test(state.name))
+      .filter(state => this.state.selected
+          .map(value => value.name)
+          .indexOf(state.name) === -1
       );
+    this.setState({
+      options: filteredNames,
     });
-  },
+  }
 
-  render: function() {
-    var selectedNames = this.state.selected.map(function(tag) {
-      return <li key={tag.id}>{tag.name}</li>
-    })
+  renderComboboxOptions() {
+    return this.state.options.map(name => (
+      <ComboboxOption
+        key={name.id}
+        value={name}
+      >{name.name}</ComboboxOption>
+    ));
+  }
 
-    var options = this.state.options.length ?
+  render() {
+    const selectedNames = this.state.selected.map(tag => <li key={tag.id}>{tag.name}</li>);
+
+    const options = this.state.options.length ?
       this.renderComboboxOptions() : [];
 
-    const loadingComponent = (
-      <img src='spinner.gif' />
-    )
+    const loadingComponent = <img role="presentation" src="spinner.gif" />;
 
     return (
       <div>
         <h1>React TokenInput Example</h1>
 
         <TokenInput
-            isLoading={this.state.loading}
-            loadingComponent={loadingComponent}
-            menuContent={options}
-            onChange={this.handleChange}
-            onInput={this.handleInput}
-            onSelect={this.handleSelect}
-            onRemove={this.handleRemove}
-            selected={this.state.selected}
-            placeholder='Enter tokens here'
-          />
+          isLoading={this.state.loading}
+          loadingComponent={loadingComponent}
+          menuContent={options}
+          onChange={this.handleChange}
+          onInput={this.handleInput}
+          onSelect={this.handleSelect}
+          onRemove={this.handleRemove}
+          selected={this.state.selected}
+          placeholder="Enter tokens here"
+        />
 
         <h2>Selected</h2>
         <ul>
@@ -118,6 +119,6 @@ var App = React.createClass({
       </div>
     );
   }
-})
+}
 
-ReactDOM.render(<App/>, document.getElementById('application'))
+ReactDOM.render(<App />, document.getElementById('application'));

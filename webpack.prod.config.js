@@ -5,10 +5,9 @@ var WebPackConfig = require("./webpack.base.config");
 
 module.exports = new WebPackConfig(/node_modules|example/, {
   entry: {
-    'react-tokeninput': ['./index'],
-    'themes/default': ['./css-default-theme']
+    'react-tokeninput.min': ['./index'],
+    'themes/default.min': ['./css-default-theme']
   },
-  
   output: {
     library: "TokenInput",
     libraryTarget: "umd",
@@ -32,4 +31,6 @@ module.exports = new WebPackConfig(/node_modules|example/, {
   debug: true,
 
   devtool: "source-map",
+
+  optimize: true
 });

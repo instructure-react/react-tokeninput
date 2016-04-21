@@ -4,3 +4,4 @@ node_modules
 tmp
 
 example/bundle.js
+.idea/

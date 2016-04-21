@@ -1,3 +1,7 @@
+var webpackConfig = require('./webpack.config');
+
+delete webpackConfig.externals;
+
 module.exports = function(config) {
   config.set({
     basePath: '',
@@ -9,14 +13,7 @@ module.exports = function(config) {
     preprocessors: {
       'test/**/*spec.js': [ 'webpack' ]
     },
-    webpack: {
-      cache: true,
-      module: {
-        loaders: [
-          { test: /\.js$/, loader: 'jsx-loader'}
-        ]
-      }
-    },
+    webpack: webpackConfig,
     webpackServer: {
       stats: {
         colors: true
