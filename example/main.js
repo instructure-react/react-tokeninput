@@ -1,10 +1,10 @@
 var React = require('react')
 var ReactDOM = require('react-dom')
 var TokenInput = require('../index')
-var ComboboxOption = require('../index').Option
+var ComboboxOption = TokenInput.Option
 
-var without = require('lodash-node/modern/arrays/without')
-var uniq = require('lodash-node/modern/arrays/uniq')
+var without = require('lodash/without')
+var uniq = require('lodash/uniq')
 var names = require('./names')
 
 var App = React.createClass({
