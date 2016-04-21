@@ -4,7 +4,7 @@
   "description": "Tokeninput component for React",
   "main": "index.js",
   "scripts": {
-    "build": "NODE_ENV=production webpack index.js dist/react-tokeninput.js && NODE_ENV=production webpack index.js dist/react-tokeninput.min.js --optimize-minimize",
+    "build": "npm run build:dev && NODE_ENV=production webpack --config webpack.prod.config.js && rm -rf ./dist/*.css.map ./dist/themes/*.{js,map}",
     "build:dev": "webpack --config webpack.config.js && rm -rf ./dist/themes/*.js.* ./dist/*.css.map ./dist/themes/*.map",
     "test": "node_modules/.bin/karma start",
     "dev": "webpack-dev-server",

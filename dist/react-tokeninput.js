@@ -7,7 +7,7 @@
 		exports["TokenInput"] = factory(require("react"), require("classnames"));
 	else
 		root["TokenInput"] = factory(root["React"], root["classnames"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_5__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_7__, __WEBPACK_EXTERNAL_MODULE_9__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -54,7 +54,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(1);
 	module.exports = __webpack_require__(1);
 
 
@@ -66,13 +65,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	/* eslint no-var:0 */
 	
-	var TokenInput = __webpack_require__(2);
-	TokenInput.Option = __webpack_require__(6);
+	__webpack_require__(2);
+	
+	var TokenInput = __webpack_require__(6).default;
+	TokenInput.Option = __webpack_require__(10).default;
 	
 	module.exports = TokenInput;
 
 /***/ },
 /* 2 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 3 */,
+/* 4 */,
+/* 5 */,
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -83,19 +93,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _react = __webpack_require__(3);
+	var _react = __webpack_require__(7);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _combobox = __webpack_require__(4);
+	var _combobox = __webpack_require__(8);
 	
 	var _combobox2 = _interopRequireDefault(_combobox);
 	
-	var _token = __webpack_require__(7);
+	var _token = __webpack_require__(11);
 	
 	var _token2 = _interopRequireDefault(_token);
 	
-	var _classnames = __webpack_require__(5);
+	var _classnames = __webpack_require__(9);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
@@ -177,13 +187,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	      });
 	
-	      var classes = (0, _classnames2.default)('ic-tokens flex', {
+	      var classes = (0, _classnames2.default)('ic-tokens ic-tokeninput-flex', {
 	        'ic-tokens-disabled': isDisabled
 	      });
 	
 	      var loadingWidget = this.props.isLoading && _react2.default.createElement(
 	        'li',
-	        { className: 'ic-tokeninput-loading flex' },
+	        { className: 'ic-tokeninput-loading ic-tokeninput-flex' },
 	        this.props.loadingComponent
 	      );
 	
@@ -193,7 +203,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        tokens,
 	        _react2.default.createElement(
 	          'li',
-	          { className: 'inline-flex', ref: 'combo-li' },
+	          { className: 'ic-tokeninput-inline-flex', ref: 'combo-li' },
 	          _react2.default.createElement(
 	            _combobox2.default,
 	            {
@@ -211,7 +221,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.props.menuContent
 	          )
 	        ),
-	        ',',
 	        loadingWidget
 	      );
 	    }
@@ -239,13 +248,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 3 */
+/* 7 */
 /***/ function(module, exports) {
 
-	module.exports = __WEBPACK_EXTERNAL_MODULE_3__;
+	module.exports = __WEBPACK_EXTERNAL_MODULE_7__;
 
 /***/ },
-/* 4 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -258,15 +267,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _inputKeydownMap;
 	
-	var _react = __webpack_require__(3);
+	var _react = __webpack_require__(7);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _classnames = __webpack_require__(5);
+	var _classnames = __webpack_require__(9);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _option = __webpack_require__(6);
+	var _option = __webpack_require__(10);
 	
 	var _option2 = _interopRequireDefault(_option);
 	
@@ -736,7 +745,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	          placeholder: this.props.placeholder,
 	          role: 'combobox'
 	        }),
-	        ',',
 	        _react2.default.createElement(
 	          'span',
 	          {
@@ -816,13 +824,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 5 */
+/* 9 */
 /***/ function(module, exports) {
 
-	module.exports = __WEBPACK_EXTERNAL_MODULE_5__;
+	module.exports = __WEBPACK_EXTERNAL_MODULE_9__;
 
 /***/ },
-/* 6 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -835,11 +843,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.default = TokenInputOption;
 	
-	var _react = __webpack_require__(3);
+	var _react = __webpack_require__(7);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _classnames = __webpack_require__(5);
+	var _classnames = __webpack_require__(9);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
@@ -892,7 +900,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 7 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -902,7 +910,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.default = Token;
 	
-	var _react = __webpack_require__(3);
+	var _react = __webpack_require__(7);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
@@ -910,10 +918,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var K_ENTER = 13;
 	
-	function handleClick(_ref) {
-	  var onRemove = _ref.onRemove;
-	  var value = _ref.value;
-	
+	function handleClick(onRemove, value) {
 	  if (typeof onRemove === 'function') {
 	    onRemove(value);
 	  }
@@ -925,17 +930,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	}
 	
-	function Token(_ref2) {
-	  var name = _ref2.name;
-	  var value = _ref2.value;
-	  var onRemove = _ref2.onRemove;
+	function Token(_ref) {
+	  var name = _ref.name;
+	  var value = _ref.value;
+	  var onRemove = _ref.onRemove;
 	
 	  var clickHandler = handleClick.bind(this, onRemove, value);
 	  var keyDownHandler = handleKeyDown.bind(this, onRemove, value);
 	
 	  return _react2.default.createElement(
 	    'li',
-	    { className: 'ic-token inline-flex' },
+	    { className: 'ic-token ic-tokeninput-inline-flex' },
 	    _react2.default.createElement(
 	      'span',
 	      {
@@ -946,7 +951,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        className: 'ic-token-delete-button',
 	        tabIndex: '0'
 	      },
-	      'x'
+	      '✕'
+	    ),
+	    _react2.default.createElement(
+	      'span',
+	      null,
+	      name
 	    )
 	  );
 	}
