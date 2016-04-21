@@ -1,8 +1,10 @@
+/* eslint-disable */
+
 module.exports = {
-  entry: "./example/main.js",
+  entry: "./index.js",
   output: {
-    library: 'TokenInput',
-    libraryTarget: 'umd'
+      library: "TokenInput",
+    libraryTarget: "umd"
   },
 
   externals: [
@@ -12,14 +14,23 @@ module.exports = {
         commonjs2: "react",
         commonjs: "react",
         amd: "react"
-      }
+      },
+
+      "classnames": true
     }
   ],
   debug: true,
-  devtool: '#source-map',
+  devtool: "source-map",
   module: {
     loaders: [
-      {test: /\.js$/, loader: 'jsx-loader'}
+      {
+        test: /\.js$/,
+        loader: "babel",
+        exclude: /node_modules|example/,
+        query: {
+          presets: ["es2015", "react"]
+        }
+      }
     ]
   }
 };

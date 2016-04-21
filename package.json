@@ -6,7 +6,8 @@
   "scripts": {
     "build": "NODE_ENV=production webpack index.js dist/react-tokeninput.js && NODE_ENV=production webpack index.js dist/react-tokeninput.min.js --optimize-minimize",
     "test": "node_modules/.bin/karma start",
-    "dev": "webpack --watch --config example/webpack.config.js"
+    "dev": "webpack-dev-server",
+    "example": "webpack-dev-server --config webpack.example.config.js"
   },
   "repository": {
     "type": "git",
@@ -19,12 +20,18 @@
   },
   "homepage": "https://github.com/instructure/react-tokeninput",
   "devDependencies": {
-    "babel-core": "^4.7.16",
-    "babel-eslint": "^4.1.5",
-    "babel-loader": "^4.2.0",
+    "babel-core": "^6.7.6",
+    "babel-eslint": "^6.0.3",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.6.0",
+    "babel-preset-react": "^6.5.0",
     "chai": "^1.10.0",
-    "eslint": "^1.10.1",
-    "jsx-loader": "^0.13.2",
+    "eslint": "^2.8.0",
+    "eslint-config-airbnb": "^7.0.0",
+    "eslint-config-airbnb-base": "^1.0.2",
+    "eslint-plugin-import": "^1.5.0",
+    "eslint-plugin-jsx-a11y": "^0.6.2",
+    "eslint-plugin-react": "^4.3.0",
     "karma": "^0.13.0",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^0.2.1",
@@ -33,13 +40,13 @@
     "karma-jasmine": "^0.2.3",
     "karma-mocha": "^0.2.0",
     "karma-webpack": "^1.3.1",
-    "lodash-node": "^2.4.1",
+    "lodash": "^4.11.1",
     "mocha": "^2.0.1",
     "react": "^0.14.0",
     "react-addons-test-utils": "^0.14.6",
     "react-dom": "^0.14.0",
-    "webpack": "^1.12.2",
-    "webpack-dev-server": "^1.12.0"
+    "webpack": "^1.13.0",
+    "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
     "classnames": "^2.2.1"
