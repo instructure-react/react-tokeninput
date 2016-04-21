@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TokenInput from '../index';
+import TokenInput, {Option as ComboboxOption} from '../index';
 
 import without from 'lodash/without';
 import uniq from 'lodash/uniq';
 import names from './names';
-
-const ComboboxOption = TokenInput.Option;
 
 class App extends React.Component {
   constructor(props, context) {

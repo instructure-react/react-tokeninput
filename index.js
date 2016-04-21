@@ -1,6 +1,8 @@
 /* eslint no-var:0 */
 
-var TokenInput = require('./lib/token-input');
-TokenInput.Option = require('./lib/option');
+require('./lib/css/base.css');
+
+var TokenInput = require('./lib/token-input').default;
+TokenInput.Option = require('./lib/option').default;
 
 module.exports = TokenInput;
