@@ -19473,9 +19473,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	          onClick: this.handleClick,
 	          onKeyDown: this.handleKeyDown,
 	          'aria-label': 'Remove \'' + this.props.name + '\'',
-	          className: "ic-token-delete-button",
+	          className: "ic-token-delete-button material-icons",
 	          tabIndex: 0
-	        }, "✕"),
+	        }, "close"),
 	        span({className: "ic-token-label"}, this.props.name)
 	      )
 	    )
