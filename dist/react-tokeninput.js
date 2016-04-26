@@ -147,6 +147,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 	  },
 	
+	  alert: function() {
+	    alert('submit results');
+	  },
+	
 	  render: function() {
 	    var selectedNames = this.state.selected.map(function(tag) {
 	      return React.createElement("li", {key: tag.id}, tag.name)
@@ -172,7 +176,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            onSelect: this.handleSelect, 
 	            onRemove: this.handleRemove, 
 	            selected: this.state.selected, 
-	            placeholder: "Enter tokens here"}
+	            placeholder: "Enter tokens here", 
+	            onSubmit:  this.alert}
 	          ), 
 	
 	        React.createElement("h2", null, "Selected"), 
@@ -8047,6 +8052,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	};
 	
+	function registerNullComponentID() {
+	  ReactEmptyComponentRegistry.registerNullComponentID(this._rootNodeID);
+	}
+	
 	var ReactEmptyComponent = function (instantiate) {
 	  this._currentElement = null;
 	  this._rootNodeID = null;
@@ -8055,7 +8064,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	assign(ReactEmptyComponent.prototype, {
 	  construct: function (element) {},
 	  mountComponent: function (rootID, transaction, context) {
-	    ReactEmptyComponentRegistry.registerNullComponentID(rootID);
+	    transaction.getReactMountReady().enqueue(registerNullComponentID, this);
 	    this._rootNodeID = rootID;
 	    return ReactReconciler.mountComponent(this._renderedComponent, rootID, transaction, context);
 	  },
@@ -18778,7 +18787,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	'use strict';
 	
-	module.exports = '0.14.7';
+	module.exports = '0.14.8';
 
 /***/ },
 /* 148 */
@@ -18833,7 +18842,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    selected: React.PropTypes.array.isRequired,
 	    menuContent: React.PropTypes.any,
 	    showListOnFocus: React.PropTypes.bool,
-	    placeholder: React.PropTypes.string
+	    placeholder: React.PropTypes.string,
+	    onSubmit: React.PropTypes.func
 	  },
 	
 	  getInitialState: function() {
@@ -18899,7 +18909,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          onRemoveLast: this.handleRemoveLast,
 	          value: this.state.selectedToken,
 	          isDisabled: isDisabled,
-	          placeholder: this.props.placeholder
+	          placeholder: this.props.placeholder,
+	          onSubmit: this.props.onSubmit
 	        },
 	          this.props.menuContent
 	        )
@@ -18949,7 +18960,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * function(selectedValue){}
 	     * ```
 	    */
+	
 	    onSelect: React.PropTypes.func,
+	    /**
+	     * alled when the combobox receives an empty selection.
+	     * Signature:
+	     *
+	     * ```js
+	     * function(){}
+	     * ```
+	     */
+	    onSubmit: React.PropTypes.func,
 	
 	    /**
 	     * Shown when the combobox is empty.
@@ -19199,7 +19220,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  selectOnEnter: function(event) {
 	    event.preventDefault();
-	    this.maybeSelectAutocompletedOption()
+	    if (this.refs.input.value === '' && this.props.onSubmit !== null) {
+	      //submit on enter
+	      this.props.onSubmit();
+	    }
+	    else {
+	      this.maybeSelectAutocompletedOption();
+	    }
 	  },
 	
 	  maybeSelectAutocompletedOption: function() {
@@ -19446,9 +19473,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	          onClick: this.handleClick,
 	          onKeyDown: this.handleKeyDown,
 	          'aria-label': 'Remove \'' + this.props.name + '\'',
-	          className: "ic-token-delete-button",
+	          className: "ic-token-delete-button material-icons",
 	          tabIndex: 0
-	        }, "✕"),
+	        }, "close"),
 	        span({className: "ic-token-label"}, this.props.name)
 	      )
 	    )

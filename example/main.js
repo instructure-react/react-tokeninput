@@ -83,6 +83,10 @@ var App = React.createClass({
     });
   },
 
+  alert: function() {
+    alert('submit results');
+  },
+
   render: function() {
     var selectedNames = this.state.selected.map(function(tag) {
       return <li key={tag.id}>{tag.name}</li>
@@ -109,6 +113,7 @@ var App = React.createClass({
             onRemove={this.handleRemove}
             selected={this.state.selected}
             placeholder='Enter tokens here'
+            onSubmit={ this.alert }
           />
 
         <h2>Selected</h2>
