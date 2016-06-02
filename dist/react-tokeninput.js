@@ -84,13 +84,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Token = _token2.default;
 	
 	
+	/**
+	 * You can't do an import and then immediately export it :(
+	 * And `export default TokenInput from './main'` doesn't seem to
+	 * work either :(
+	 * So this little variable swapping stuff gets it to work.
+	 */
 	var TokenInput = _main2.default;
 	exports.default = TokenInput;
-	
-	// export {Combobox};
-	// export {Option};
-	// export {Token};
-	// export default TokenInput;
 
 /***/ },
 /* 1 */
