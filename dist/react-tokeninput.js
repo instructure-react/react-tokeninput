@@ -335,11 +335,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	
 	  inputKeydownMap: {
-	    8: 'removeLastToken',
-	    13: 'selectOnEnter',
-	    27: 'hideOnEscape',
-	    38: 'focusPrevious',
-	    40: 'focusNext'
+	    8: 'removeLastToken', // delete
+	    13: 'selectOnEnter', // enter
+	    188: 'selectOnEnter', // comma
+	    27: 'hideOnEscape', // escape
+	    38: 'focusPrevious', // up arrow
+	    40: 'focusNext' // down arrow
 	  },
 	
 	  optionKeydownMap: {
