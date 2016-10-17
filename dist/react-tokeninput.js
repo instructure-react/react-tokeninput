@@ -610,14 +610,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  render: function render() {
 	    return li({
 	      className: "ic-token inline-flex"
-	    }, span({
+	    }, span({ className: "ic-token-label" }, this.props.name), span({
 	      role: 'button',
 	      onClick: this.handleClick,
 	      onKeyDown: this.handleKeyDown,
 	      'aria-label': 'Remove \'' + this.props.name + '\'',
 	      className: "ic-token-delete-button",
 	      tabIndex: 0
-	    }, "✕"), span({ className: "ic-token-label" }, this.props.name));
+	    }, "✕"));
 	  }
 	});
 

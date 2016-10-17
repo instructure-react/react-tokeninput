@@ -17,6 +17,7 @@ module.exports = React.createClass({
       li({
         className: "ic-token inline-flex"
       },
+        span({className: "ic-token-label"}, this.props.name),
         span({
           role: 'button',
           onClick: this.handleClick,
@@ -24,8 +25,7 @@ module.exports = React.createClass({
           'aria-label': 'Remove \'' + this.props.name + '\'',
           className: "ic-token-delete-button",
           tabIndex: 0
-        }, "✕"),
-        span({className: "ic-token-label"}, this.props.name)
+        }, "✕")
       )
     )
   }
