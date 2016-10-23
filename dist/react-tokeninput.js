@@ -706,7 +706,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    return ul({ className: classes, onClick: this.handleClick }, tokens, li({ className: 'inline-flex', ref: 'combo-li' }, Combobox({
 	      id: this.props.id,
-	      ariaLabel: this.props['combobox-aria-label'],
+	      'aria-label': this.props['combobox-aria-label'],
 	      ariaDisabled: isDisabled,
 	      onInput: this.handleInput,
 	      showListOnFocus: this.props.showListOnFocus,
