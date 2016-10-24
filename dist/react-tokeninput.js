@@ -607,17 +607,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (key.keyCode === enterKey) this.props.onRemove(this.props.value);
 	  },
 	
+	  ariaLabelRemove: function ariaLabelRemove() {
+	    return this.props.tokenAriaFunc ? this.props.tokenAriaFunc(this.props.name) : 'Remove \'' + this.props.name + '\'';
+	  },
+	
 	  render: function render() {
 	    return li({
 	      className: "ic-token inline-flex"
-	    }, span({
+	    }, span({ className: "ic-token-label" }, this.props.name), span({
 	      role: 'button',
 	      onClick: this.handleClick,
 	      onKeyDown: this.handleKeyDown,
-	      'aria-label': 'Remove \'' + this.props.name + '\'',
+	      'aria-label': this.ariaLabelRemove(),
 	      className: "ic-token-delete-button",
 	      tabIndex: 0
-	    }, "✕"), span({ className: "ic-token-label" }, this.props.name));
+	    }, "✕"));
 	  }
 	});
 
@@ -643,6 +647,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    loadingComponent: React.PropTypes.any,
 	    onInput: React.PropTypes.func,
 	    onSelect: React.PropTypes.func.isRequired,
+	    tokenAriaFunc: React.PropTypes.func,
 	    onRemove: React.PropTypes.func.isRequired,
 	    selected: React.PropTypes.array.isRequired,
 	    menuContent: React.PropTypes.any,
@@ -688,6 +693,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var isDisabled = this.props.isDisabled;
 	    var tokens = this.props.selected.map(function (token) {
 	      return Token({
+	        tokenAriaFunc: this.props.tokenAriaFunc,
 	        onRemove: this.handleRemove,
 	        value: token,
 	        name: token.name,
@@ -700,7 +706,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    return ul({ className: classes, onClick: this.handleClick }, tokens, li({ className: 'inline-flex', ref: 'combo-li' }, Combobox({
 	      id: this.props.id,
-	      ariaLabel: this.props['combobox-aria-label'],
+	      'aria-label': this.props['combobox-aria-label'],
 	      ariaDisabled: isDisabled,
 	      onInput: this.handleInput,
 	      showListOnFocus: this.props.showListOnFocus,

@@ -12,20 +12,25 @@ module.exports = React.createClass({
     if(key.keyCode === enterKey) this.props.onRemove(this.props.value)
   },
 
+  ariaLabelRemove: function ariaLabelRemove() {
+    return this.props.tokenAriaFunc ? this.props.tokenAriaFunc(this.props.name) :
+      'Remove \'' + this.props.name + '\'';
+  },
+
   render: function() {
     return (
       li({
         className: "ic-token inline-flex"
       },
+        span({className: "ic-token-label"}, this.props.name),
         span({
           role: 'button',
           onClick: this.handleClick,
           onKeyDown: this.handleKeyDown,
-          'aria-label': 'Remove \'' + this.props.name + '\'',
+          'aria-label': this.ariaLabelRemove(),
           className: "ic-token-delete-button",
           tabIndex: 0
-        }, "✕"),
-        span({className: "ic-token-label"}, this.props.name)
+        }, "✕")
       )
     )
   }
