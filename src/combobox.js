@@ -38,7 +38,12 @@ module.exports = React.createClass({
     /**
      * Shown when the combobox is empty.
     */
-    placeholder: React.PropTypes.string
+    placeholder: React.PropTypes.string,
+
+    /**
+     * If true, hides the menu when option is selected
+    */
+    hideMenuOnSelect: React.PropTypes.bool
   },
 
   getDefaultProps: function() {
@@ -47,7 +52,8 @@ module.exports = React.createClass({
       onInput: k,
       onSelect: k,
       value: null,
-      showListOnFocus: false
+      showListOnFocus: false,
+      hideMenuOnSelect: true
     };
   },
 
@@ -77,7 +83,7 @@ module.exports = React.createClass({
 
   componentWillReceiveProps: function(newProps) {
     this.setState({menu: this.makeMenu(newProps.children)}, function() {
-      if(newProps.children.length && (this.isOpen || document.activeElement === this.refs.input)) {
+      if(newProps.children.length && (this.state.isOpen || document.activeElement === this.refs.input)) {
         if(!this.state.menu.children.length) {
           return
         }
@@ -295,20 +301,24 @@ module.exports = React.createClass({
     }
   },
 
-  selectOption: function(child, options) {
-    options = options || {};
+  selectOption: function(child, optionsOrEvent) {
+    if (optionsOrEvent && optionsOrEvent.stopPropagation) { optionsOrEvent.stopPropagation(); }
+    optionsOrEvent = optionsOrEvent || {};
     this.setState({
       // value: child.props.value,
       // inputValue: getLabel(child),
       matchedAutocompleteOption: null
     }, function() {
       this.props.onSelect(child.props.value, child);
-      this.hideList();
-      this.clearSelectedState(); // added
-      if (options.focus !== false)
-        this.selectInput();
+      if (this.props.hideMenuOnSelect) {
+        this.hideList();
+        this.clearSelectedState(); // added
+        if (optionsOrEvent.focus !== false) this.selectInput();
+      }
     }.bind(this));
-    this.refs.input.value = '' // added
+    if (this.props.hideMenuOnSelect) {
+      this.refs.input.value = ''; // added
+    }
   },
 
   selectText: function() {

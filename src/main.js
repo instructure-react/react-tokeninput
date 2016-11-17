@@ -17,7 +17,8 @@ module.exports = React.createClass({
     selected: React.PropTypes.array.isRequired,
     menuContent: React.PropTypes.any,
     showListOnFocus: React.PropTypes.bool,
-    placeholder: React.PropTypes.string
+    placeholder: React.PropTypes.string,
+    hideMenuOnSelect: React.PropTypes.bool
   },
 
   getInitialState: function() {
@@ -84,7 +85,8 @@ module.exports = React.createClass({
           onRemoveLast: this.handleRemoveLast,
           value: this.state.selectedToken,
           isDisabled: isDisabled,
-          placeholder: this.props.placeholder
+          placeholder: this.props.placeholder,
+          hideMenuOnSelect: this.props.hideMenuOnSelect
         },
           this.props.menuContent
         )
