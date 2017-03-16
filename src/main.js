@@ -9,7 +9,7 @@ var li = React.DOM.li;
 module.exports = React.createClass({
   propTypes: {
     // input custom className
-    className: React.PropTypes.string,
+    inputClassName: React.PropTypes.string,
     isLoading: React.PropTypes.bool,
     loadingComponent: React.PropTypes.any,
     onInput: React.PropTypes.func,
@@ -79,7 +79,7 @@ module.exports = React.createClass({
         Combobox({
           'aria-label': this.props['combobox-aria-label'],
           ariaDisabled: isDisabled,
-          className: this.props.className,
+          inputClassName: this.props.inputClassName,
           id: this.props.id,
           isDisabled: isDisabled,
           onInput: this.handleInput,
