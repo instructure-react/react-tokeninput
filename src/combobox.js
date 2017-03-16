@@ -388,7 +388,10 @@ module.exports = React.createClass({
     var ariaLabel = this.props['aria-label'] || 'Start typing to search. ' +
       'Press the down arrow to navigate results. If you don\'t find an ' +
       'acceptable option, you can input an alternative. Once you find or ' +
-      'input the tag you want, press Enter or Comma to add it.'
+      'input the tag you want, press Enter or Comma to add it.';
+    var inputClassName = this.props.className ? 
+      'ic-tokeninput-input ' + className 
+      : 'ic-tokeninput-input';
 
     return div({className: this.getClassName()},
       this.props.value,
@@ -405,7 +408,7 @@ module.exports = React.createClass({
         'aria-owns': this.state.listId,
         id: this.props.id,
         disabled: this.props.isDisabled,
-        className: 'ic-tokeninput-input',
+        className: inputClassName,
         onFocus: this.handleInputFocus,
         onClick: this.handleInputClick,
         onChange: this.handleInputChange,
