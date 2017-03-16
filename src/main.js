@@ -9,7 +9,7 @@ var li = React.DOM.li;
 module.exports = React.createClass({
   propTypes: {
     // input custom className
-    className: PropTypes.string,
+    className: React.PropTypes.string,
     isLoading: React.PropTypes.bool,
     loadingComponent: React.PropTypes.any,
     onInput: React.PropTypes.func,
