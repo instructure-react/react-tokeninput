@@ -8,6 +8,8 @@ var li = React.DOM.li;
 
 module.exports = React.createClass({
   propTypes: {
+    // input custom className
+    inputClassName: React.PropTypes.string,
     isLoading: React.PropTypes.bool,
     loadingComponent: React.PropTypes.any,
     onInput: React.PropTypes.func,
@@ -75,16 +77,17 @@ module.exports = React.createClass({
       tokens,
       li({className: 'inline-flex', ref: 'combo-li'},
         Combobox({
-          id: this.props.id,
           'aria-label': this.props['combobox-aria-label'],
           ariaDisabled: isDisabled,
-          onInput: this.handleInput,
-          showListOnFocus: this.props.showListOnFocus,
-          onSelect: this.handleSelect,
-          onRemoveLast: this.handleRemoveLast,
-          value: this.state.selectedToken,
+          inputClassName: this.props.inputClassName,
+          id: this.props.id,
           isDisabled: isDisabled,
-          placeholder: this.props.placeholder
+          onInput: this.handleInput,
+          onRemoveLast: this.handleRemoveLast,
+          onSelect: this.handleSelect,
+          placeholder: this.props.placeholder,
+          showListOnFocus: this.props.showListOnFocus,
+          value: this.state.selectedToken,
         },
           this.props.menuContent
         )

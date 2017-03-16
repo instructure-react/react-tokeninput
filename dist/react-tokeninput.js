@@ -469,6 +469,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  render: function render() {
 	    var ariaLabel = this.props['aria-label'] || 'Start typing to search. ' + 'Press the down arrow to navigate results. If you don\'t find an ' + 'acceptable option, you can input an alternative. Once you find or ' + 'input the tag you want, press Enter or Comma to add it.';
+	    var inputClassName = this.props.className ? 'ic-tokeninput-input ' + className : 'ic-tokeninput-input';
 	
 	    return div({ className: this.getClassName() }, this.props.value, this.state.inputValue, input({
 	      ref: 'input',
@@ -482,7 +483,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      'aria-owns': this.state.listId,
 	      id: this.props.id,
 	      disabled: this.props.isDisabled,
-	      className: 'ic-tokeninput-input',
+	      className: inputClassName,
 	      onFocus: this.handleInputFocus,
 	      onClick: this.handleInputClick,
 	      onChange: this.handleInputChange,
@@ -643,6 +644,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  displayName: 'exports',
 	
 	  propTypes: {
+	    // input custom className
+	    className: PropTypes.string,
 	    isLoading: React.PropTypes.bool,
 	    loadingComponent: React.PropTypes.any,
 	    onInput: React.PropTypes.func,
@@ -705,16 +708,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 	
 	    return ul({ className: classes, onClick: this.handleClick }, tokens, li({ className: 'inline-flex', ref: 'combo-li' }, Combobox({
-	      id: this.props.id,
 	      'aria-label': this.props['combobox-aria-label'],
 	      ariaDisabled: isDisabled,
-	      onInput: this.handleInput,
-	      showListOnFocus: this.props.showListOnFocus,
-	      onSelect: this.handleSelect,
-	      onRemoveLast: this.handleRemoveLast,
-	      value: this.state.selectedToken,
+	      className: this.props.className,
+	      id: this.props.id,
 	      isDisabled: isDisabled,
-	      placeholder: this.props.placeholder
+	      onInput: this.handleInput,
+	      onRemoveLast: this.handleRemoveLast,
+	      onSelect: this.handleSelect,
+	      placeholder: this.props.placeholder,
+	      showListOnFocus: this.props.showListOnFocus,
+	      value: this.state.selectedToken
 	    }, this.props.menuContent)), this.props.isLoading && li({ className: 'ic-tokeninput-loading flex' }, this.props.loadingComponent));
 	  }
 	});
