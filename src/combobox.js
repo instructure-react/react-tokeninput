@@ -390,7 +390,7 @@ module.exports = React.createClass({
       'acceptable option, you can input an alternative. Once you find or ' +
       'input the tag you want, press Enter or Comma to add it.';
     var inputClassName = this.props.className ? 
-      'ic-tokeninput-input ' + className 
+      'ic-tokeninput-input ' + this.props.className 
       : 'ic-tokeninput-input';
 
     return div({className: this.getClassName()},
