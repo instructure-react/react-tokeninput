@@ -11,6 +11,8 @@ var input = React.createFactory('input');
 module.exports = React.createClass({
 
   propTypes: {
+    onFocus: React.PropTypes.func,
+
     /**
      * Called when the combobox receives user input, this is your chance to
      * filter the data and rerender the options.
@@ -44,6 +46,7 @@ module.exports = React.createClass({
   getDefaultProps: function() {
     return {
       autocomplete: 'both',
+      onFocus: k,
       onInput: k,
       onSelect: k,
       value: null,
@@ -164,6 +167,7 @@ module.exports = React.createClass({
   },
 
   handleInputFocus: function() {
+    this.props.onFocus();
     this.maybeShowList();
   },
 

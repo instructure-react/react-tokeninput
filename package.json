@@ -29,6 +29,7 @@
     "babel-preset-stage-1": "^6.5.0",
     "chai": "^1.10.0",
     "eslint": "^1.10.1",
+    "jsx-loader": "^0.13.2",
     "karma": "^0.13.0",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^0.2.1",
