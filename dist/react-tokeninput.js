@@ -114,6 +114,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	  propTypes: {
+	    onFocus: React.PropTypes.func,
+	
 	    /**
 	     * Called when the combobox receives user input, this is your chance to
 	     * filter the data and rerender the options.
@@ -147,6 +149,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  getDefaultProps: function getDefaultProps() {
 	    return {
 	      autocomplete: 'both',
+	      onFocus: k,
 	      onInput: k,
 	      onSelect: k,
 	      value: null,
@@ -265,6 +268,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	
 	  handleInputFocus: function handleInputFocus() {
+	    this.props.onFocus();
 	    this.maybeShowList();
 	  },
 	
@@ -617,6 +621,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, span({ className: "ic-token-label" }, this.props.name), span({
 	      role: 'button',
 	      onClick: this.handleClick,
+	      onFocus: this.props.onFocus,
 	      onKeyDown: this.handleKeyDown,
 	      'aria-label': this.ariaLabelRemove(),
 	      className: "ic-token-delete-button",
@@ -645,7 +650,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  propTypes: {
 	    isLoading: React.PropTypes.bool,
 	    loadingComponent: React.PropTypes.any,
-	    onInput: React.PropTypes.func,
+	    onFocus: React.PropTypes.func,
+	    onInput: React.PropTypes.func.isRequired,
 	    onSelect: React.PropTypes.func.isRequired,
 	    tokenAriaFunc: React.PropTypes.func,
 	    onRemove: React.PropTypes.func.isRequired,
@@ -664,6 +670,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  handleClick: function handleClick() {
 	    // TODO: Expand combobox API for focus
 	    this.refs['combo-li'].querySelector('input').focus();
+	  },
+	
+	  handleFocus: function handleFocus() {
+	    if (this.props.onFocus) {
+	      this.props.onFocus();
+	    }
 	  },
 	
 	  handleInput: function handleInput(inputValue) {
@@ -694,6 +706,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var tokens = this.props.selected.map(function (token) {
 	      return Token({
 	        tokenAriaFunc: this.props.tokenAriaFunc,
+	        onFocus: this.handleFocus,
 	        onRemove: this.handleRemove,
 	        value: token,
 	        name: token.name,
@@ -708,6 +721,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      id: this.props.id,
 	      'aria-label': this.props['combobox-aria-label'],
 	      ariaDisabled: isDisabled,
+	      onFocus: this.handleFocus,
 	      onInput: this.handleInput,
 	      showListOnFocus: this.props.showListOnFocus,
 	      onSelect: this.handleSelect,
