@@ -10,7 +10,7 @@ module.exports = React.createClass({
   propTypes: {
     isLoading: React.PropTypes.bool,
     loadingComponent: React.PropTypes.any,
-    onInput: React.PropTypes.func,
+    onInput: React.PropTypes.func.isRequired,
     onSelect: React.PropTypes.func.isRequired,
     tokenAriaFunc: React.PropTypes.func,
     onRemove: React.PropTypes.func.isRequired,
