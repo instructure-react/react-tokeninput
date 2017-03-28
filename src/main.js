@@ -10,6 +10,7 @@ module.exports = React.createClass({
   propTypes: {
     isLoading: React.PropTypes.bool,
     loadingComponent: React.PropTypes.any,
+    onFocus: React.PropTypes.func,
     onInput: React.PropTypes.func.isRequired,
     onSelect: React.PropTypes.func.isRequired,
     tokenAriaFunc: React.PropTypes.func,
@@ -29,6 +30,12 @@ module.exports = React.createClass({
   handleClick: function() {
     // TODO: Expand combobox API for focus
     this.refs['combo-li'].querySelector('input').focus();
+  },
+
+  handleFocus: function() {
+    if (this.props.onFocus) {
+      this.props.onFocus();
+    }
   },
 
   handleInput: function(inputValue) {
@@ -60,6 +67,7 @@ module.exports = React.createClass({
       return (
         Token({
           tokenAriaFunc: this.props.tokenAriaFunc,
+          onFocus: this.handleFocus,
           onRemove: this.handleRemove,
           value: token,
           name: token.name,
@@ -78,6 +86,7 @@ module.exports = React.createClass({
           id: this.props.id,
           'aria-label': this.props['combobox-aria-label'],
           ariaDisabled: isDisabled,
+          onFocus: this.handleFocus,
           onInput: this.handleInput,
           showListOnFocus: this.props.showListOnFocus,
           onSelect: this.handleSelect,

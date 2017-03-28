@@ -26,6 +26,7 @@ module.exports = React.createClass({
         span({
           role: 'button',
           onClick: this.handleClick,
+          onFocus: this.props.onFocus,
           onKeyDown: this.handleKeyDown,
           'aria-label': this.ariaLabelRemove(),
           className: "ic-token-delete-button",
