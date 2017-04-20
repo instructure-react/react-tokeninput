@@ -1,4 +1,9 @@
 module.exports = [
+  "A",
+  "Andsdfy",
+  /*"B",
+  "Bettysdf",
+  "C",
   "Aaliyah",
   "Aarushi",
   "Abagail",
@@ -1798,11 +1803,10 @@ module.exports = [
   "Zoya",
   "Zula",
   "Zuri",
-  "Zyana"
+  "Zyana"*/
 ].map(function(name) {
   return {
     id: name,
     name: name
   }
 });
-

@@ -52,7 +52,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -93,9 +93,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	var TokenInput = _main2.default;
 	exports.default = TokenInput;
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -210,7 +210,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // Should this instead use React.addons.cloneWithProps or React.cloneElement?
 	    var _children = React.Children.map(children, function (child, index) {
 	      // console.log(child.type, ComboboxOption.type)
-	      if (child.type !== ComboboxOption) {
+	      if (child.type !== ComboboxOption || !child.props.isFocusable) {
 	        // allow random elements to live in this list
 	        return child;
 	      }
@@ -417,7 +417,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  focusNext: function focusNext(event) {
 	    if (event.preventDefault) event.preventDefault();
 	    if (this.state.menu.isEmpty) return;
-	    var index = this.state.focusedIndex == null ? 0 : this.state.focusedIndex + 1;
+	    var index = this.nextFocusableIndex(this.state.focusedIndex);
 	    this.focusOptionAtIndex(index);
 	  },
 	
@@ -431,8 +431,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  focusPrevious: function focusPrevious(event) {
 	    if (event.preventDefault) event.preventDefault();
 	    if (this.state.menu.isEmpty) return;
-	    var last = this.props.children.length - 1;
-	    var index = this.state.focusedIndex == null ? last : this.state.focusedIndex - 1;
+	    var index = this.previousFocusableIndex(this.state.focusedIndex);
 	    this.focusOptionAtIndex(index);
 	  },
 	
@@ -454,6 +453,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (child.props.value === this.props.value) inputValue = getLabel(child);
 	    }.bind(this));
 	    return inputValue;
+	  },
+	
+	  clampIndex: function clampIndex(index) {
+	    if (index < 0) {
+	      return this.props.children.length - 1;
+	    } else if (index >= this.props.children.length) {
+	      return 0;
+	    }
+	    return index;
+	  },
+	
+	  scanForFocusableIndex: function scanForFocusableIndex(index, increment) {
+	    if (index === null || index === undefined) {
+	      index = increment > 0 ? this.clampIndex(-1) : 0;
+	    }
+	    var newIndex = index;
+	    while (true) {
+	      newIndex = this.clampIndex(newIndex + increment);
+	      if (newIndex === index || this.props.children[newIndex].props.isFocusable) {
+	        return newIndex;
+	      }
+	    }
+	  },
+	
+	  nextFocusableIndex: function nextFocusableIndex(index) {
+	    return this.scanForFocusableIndex(index, 1);
+	  },
+	
+	  previousFocusableIndex: function previousFocusableIndex(index) {
+	    return this.scanForFocusableIndex(index, -1);
 	  },
 	
 	  focusOptionAtIndex: function focusOptionAtIndex(index) {
@@ -520,15 +549,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return true;
 	}
 
-/***/ },
+/***/ }),
 /* 2 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
 
-/***/ },
+/***/ }),
 /* 3 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 	
@@ -540,9 +569,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return existing + ' ' + added;
 	}
 
-/***/ },
+/***/ }),
 /* 4 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -566,7 +595,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * What value to put into the input element when this option is
 	     * selected, defaults to its children coerced to a string.
 	    */
-	    label: React.PropTypes.string
+	    label: React.PropTypes.string,
+	
+	    /**
+	     * Whether the element should be selectable
+	    */
+	    isFocusable: React.PropTypes.bool
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
@@ -574,7 +608,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      role: 'option',
 	      tabIndex: '-1',
 	      className: 'ic-tokeninput-option',
-	      isSelected: false
+	      isSelected: false,
+	      isFocusable: true
 	    };
 	  },
 	
@@ -589,9 +624,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	});
 
-/***/ },
+/***/ }),
 /* 5 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -630,9 +665,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 
-/***/ },
+/***/ }),
 /* 6 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -733,9 +768,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 
-/***/ },
+/***/ }),
 /* 7 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 	  Copyright (c) 2016 Jed Watson.
@@ -787,7 +822,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}());
 
 
-/***/ }
+/***/ })
 /******/ ])
 });
 ;

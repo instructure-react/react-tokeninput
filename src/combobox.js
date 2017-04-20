@@ -108,7 +108,7 @@ module.exports = React.createClass({
     // Should this instead use React.addons.cloneWithProps or React.cloneElement?
     var _children = React.Children.map(children, function(child, index) {
       // console.log(child.type, ComboboxOption.type)
-      if (child.type !== ComboboxOption) {
+      if (child.type !== ComboboxOption || !child.props.isFocusable) {
         // allow random elements to live in this list
         return child;
       }
@@ -326,8 +326,7 @@ module.exports = React.createClass({
   focusNext: function(event) {
     if(event.preventDefault) event.preventDefault();
     if (this.state.menu.isEmpty) return;
-    var index = this.state.focusedIndex == null ?
-      0 : this.state.focusedIndex + 1;
+    var index = this.nextFocusableIndex(this.state.focusedIndex)
     this.focusOptionAtIndex(index);
   },
 
@@ -341,9 +340,7 @@ module.exports = React.createClass({
   focusPrevious: function(event) {
     if(event.preventDefault) event.preventDefault();
     if (this.state.menu.isEmpty) return;
-    var last = this.props.children.length - 1;
-    var index = this.state.focusedIndex == null ?
-      last : this.state.focusedIndex - 1;
+    var index = this.previousFocusableIndex(this.state.focusedIndex)
     this.focusOptionAtIndex(index);
   },
 
@@ -367,6 +364,38 @@ module.exports = React.createClass({
         inputValue = getLabel(child);
     }.bind(this));
     return inputValue;
+  },
+
+  clampIndex: function(index) {
+    if (index < 0) {
+      return this.props.children.length - 1
+    } else if (index >= this.props.children.length) {
+      return 0
+    }
+    return index
+  },
+
+  scanForFocusableIndex: function(index, increment) {
+    if (index === null || index === undefined) {
+      index = increment > 0 ? this.clampIndex(-1) : 0
+    }
+    var newIndex = index
+    while (true) {
+      newIndex = this.clampIndex(newIndex + increment)
+      if (newIndex === index ||
+          this.props.children[newIndex].props.isFocusable)
+      {
+        return newIndex
+      }
+    }
+  },
+
+  nextFocusableIndex: function(index) {
+    return this.scanForFocusableIndex(index, 1)
+  },
+
+  previousFocusableIndex: function(index) {
+    return this.scanForFocusableIndex(index, -1)
   },
 
   focusOptionAtIndex: function(index) {
