@@ -78,6 +78,7 @@ var App = React.createClass({
         <ComboboxOption
           key={name.id}
           value={name}
+          isFocusable={name.name.length > 1}
         >{name.name}</ComboboxOption>
       );
     });

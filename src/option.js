@@ -16,7 +16,12 @@ module.exports = React.createClass({
      * What value to put into the input element when this option is
      * selected, defaults to its children coerced to a string.
     */
-    label: React.PropTypes.string
+    label: React.PropTypes.string,
+
+    /**
+     * Whether the element should be selectable
+    */
+    isFocusable: React.PropTypes.bool
   },
 
   getDefaultProps: function() {
@@ -24,7 +29,8 @@ module.exports = React.createClass({
       role: 'option',
       tabIndex: '-1',
       className: 'ic-tokeninput-option',
-      isSelected: false
+      isSelected: false,
+      isFocusable: true
     };
   },
 
