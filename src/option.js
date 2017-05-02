@@ -40,7 +40,11 @@ module.exports = React.createClass({
       props.className = addClass(props.className, 'ic-tokeninput-selected');
       props.ariaSelected = true;
     }
-    return div(props);
+    return div({
+      role: props.role,
+      tabIndex: props.tabIndex,
+      className: props.className
+    });
   }
 
 });
