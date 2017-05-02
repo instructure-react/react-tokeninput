@@ -11,7 +11,27 @@ var input = React.createFactory('input');
 module.exports = React.createClass({
 
   propTypes: {
+    /**
+     * Called when the combobox's input receives focus and the user begins interacting with it.
+     *
+     * Signature:
+     *
+     * ```js
+     * function(userInput){}
+     * ```
+    */
     onFocus: React.PropTypes.func,
+
+    /**
+     * Called when the combobox's input loses focus after being activated for user input
+     *
+     * Signature:
+     *
+     * ```js
+     * function(userInput){}
+     * ```
+    */
+    onBlur: React.PropTypes.func,
 
     /**
      * Called when the combobox receives user input, this is your chance to
@@ -47,6 +67,7 @@ module.exports = React.createClass({
     return {
       autocomplete: 'both',
       onFocus: k,
+      onBlur: k,
       onInput: k,
       onSelect: k,
       value: null,
@@ -187,6 +208,7 @@ module.exports = React.createClass({
       return;
     this.maybeSelectAutocompletedOption();
     this.hideList();
+    this.props.onBlur();
   },
 
   handleOptionBlur: function() {
