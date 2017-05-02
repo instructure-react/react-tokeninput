@@ -11,6 +11,7 @@ module.exports = React.createClass({
     isLoading: React.PropTypes.bool,
     loadingComponent: React.PropTypes.any,
     onFocus: React.PropTypes.func,
+    onBlur: React.PropTypes.func,
     onInput: React.PropTypes.func.isRequired,
     onSelect: React.PropTypes.func.isRequired,
     tokenAriaFunc: React.PropTypes.func,
@@ -35,6 +36,12 @@ module.exports = React.createClass({
   handleFocus: function() {
     if (this.props.onFocus) {
       this.props.onFocus();
+    }
+  },
+
+  handleBlur: function() {
+    if (this.props.onBlur) {
+      this.props.onBlur();
     }
   },
 
@@ -87,6 +94,7 @@ module.exports = React.createClass({
           'aria-label': this.props['combobox-aria-label'],
           ariaDisabled: isDisabled,
           onFocus: this.handleFocus,
+          onBlur: this.handleBlur,
           onInput: this.handleInput,
           showListOnFocus: this.props.showListOnFocus,
           onSelect: this.handleSelect,
