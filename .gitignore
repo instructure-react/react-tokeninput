@@ -2,6 +2,6 @@ TODO
 *.log
 node_modules
 tmp
-lib
+!lib/
 example/bundle.js
 yarn.lock
