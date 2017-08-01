@@ -302,10 +302,11 @@ module.exports = React.createClass({
   },
 
   handleOptionMouseEnter: function(index) {
-    if (this.state.usingKeyboard)
-      this.setState({usingKeyboard: false});
-    else
-      this.focusOptionAtIndex(index);
+    if (this.state.usingKeyboard) {
+      this.setState({ usingKeyboard: false });
+    }
+
+    this.focusOptionAtIndex(index);
   },
 
   selectOnEnter: function(event) {
