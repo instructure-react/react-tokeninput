@@ -69,11 +69,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _option2 = _interopRequireDefault(_option);
 	
-	var _token = __webpack_require__(5);
+	var _token = __webpack_require__(9);
 	
 	var _token2 = _interopRequireDefault(_token);
 	
-	var _main = __webpack_require__(6);
+	var _main = __webpack_require__(10);
 	
 	var _main2 = _interopRequireDefault(_main);
 	
@@ -114,7 +114,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	  propTypes: {
+	    /**
+	     * Called when the combobox's input receives focus and the user begins interacting with it.
+	     *
+	     * Signature:
+	     *
+	     * ```js
+	     * function(userInput){}
+	     * ```
+	    */
 	    onFocus: React.PropTypes.func,
+	
+	    /**
+	     * Called when the combobox's input loses focus after being activated for user input
+	     *
+	     * Signature:
+	     *
+	     * ```js
+	     * function(userInput){}
+	     * ```
+	    */
+	    onBlur: React.PropTypes.func,
 	
 	    /**
 	     * Called when the combobox receives user input, this is your chance to
@@ -150,6 +170,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return {
 	      autocomplete: 'both',
 	      onFocus: k,
+	      onBlur: k,
 	      onInput: k,
 	      onSelect: k,
 	      value: null,
@@ -287,6 +308,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (focusedAnOption) return;
 	    this.maybeSelectAutocompletedOption();
 	    this.hideList();
+	    this.props.onBlur();
 	  },
 	
 	  handleOptionBlur: function handleOptionBlur() {
@@ -375,7 +397,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	
 	  handleOptionMouseEnter: function handleOptionMouseEnter(index) {
-	    if (this.state.usingKeyboard) this.setState({ usingKeyboard: false });else this.focusOptionAtIndex(index);
+	    if (this.state.usingKeyboard) {
+	      this.setState({ usingKeyboard: false });
+	    }
+	
+	    this.focusOptionAtIndex(index);
 	  },
 	
 	  selectOnEnter: function selectOnEnter(event) {
@@ -577,6 +603,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var React = __webpack_require__(2);
 	var addClass = __webpack_require__(3);
+	var omit = __webpack_require__(5);
 	var div = React.createFactory('div');
 	
 	module.exports = React.createClass({
@@ -619,13 +646,125 @@ return /******/ (function(modules) { // webpackBootstrap
 	      props.className = addClass(props.className, 'ic-tokeninput-selected');
 	      props.ariaSelected = true;
 	    }
-	    return div(props);
+	    return div(omit(props, ['isSelected', 'isFocusable']));
 	  }
 	
 	});
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/*!
+	 * object.omit <https://github.com/jonschlinkert/object.omit>
+	 *
+	 * Copyright (c) 2014-2015, Jon Schlinkert.
+	 * Licensed under the MIT License.
+	 */
+	
+	'use strict';
+	
+	var isObject = __webpack_require__(6);
+	var forOwn = __webpack_require__(7);
+	
+	module.exports = function omit(obj, keys) {
+	  if (!isObject(obj)) return {};
+	
+	  keys = [].concat.apply([], [].slice.call(arguments, 1));
+	  var last = keys[keys.length - 1];
+	  var res = {}, fn;
+	
+	  if (typeof last === 'function') {
+	    fn = keys.pop();
+	  }
+	
+	  var isFunction = typeof fn === 'function';
+	  if (!keys.length && !isFunction) {
+	    return obj;
+	  }
+	
+	  forOwn(obj, function(value, key) {
+	    if (keys.indexOf(key) === -1) {
+	
+	      if (!isFunction) {
+	        res[key] = value;
+	      } else if (fn(value, key, obj)) {
+	        res[key] = value;
+	      }
+	    }
+	  });
+	  return res;
+	};
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+	/*!
+	 * is-extendable <https://github.com/jonschlinkert/is-extendable>
+	 *
+	 * Copyright (c) 2015, Jon Schlinkert.
+	 * Licensed under the MIT License.
+	 */
+	
+	'use strict';
+	
+	module.exports = function isExtendable(val) {
+	  return typeof val !== 'undefined' && val !== null
+	    && (typeof val === 'object' || typeof val === 'function');
+	};
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/*!
+	 * for-own <https://github.com/jonschlinkert/for-own>
+	 *
+	 * Copyright (c) 2014-2017, Jon Schlinkert.
+	 * Released under the MIT License.
+	 */
+	
+	'use strict';
+	
+	var forIn = __webpack_require__(8);
+	var hasOwn = Object.prototype.hasOwnProperty;
+	
+	module.exports = function forOwn(obj, fn, thisArg) {
+	  forIn(obj, function(val, key) {
+	    if (hasOwn.call(obj, key)) {
+	      return fn.call(thisArg, obj[key], key, obj);
+	    }
+	  });
+	};
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
+	/*!
+	 * for-in <https://github.com/jonschlinkert/for-in>
+	 *
+	 * Copyright (c) 2014-2017, Jon Schlinkert.
+	 * Released under the MIT License.
+	 */
+	
+	'use strict';
+	
+	module.exports = function forIn(obj, fn, thisArg) {
+	  for (var key in obj) {
+	    if (fn.call(thisArg, obj[key], key, obj) === false) {
+	      break;
+	    }
+	  }
+	};
+
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -666,15 +805,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ }),
-/* 6 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(2);
 	var Combobox = React.createFactory(__webpack_require__(1));
-	var Token = React.createFactory(__webpack_require__(5));
-	var classnames = __webpack_require__(7);
+	var Token = React.createFactory(__webpack_require__(9));
+	var classnames = __webpack_require__(11);
 	
 	var ul = React.DOM.ul;
 	var li = React.DOM.li;
@@ -686,6 +825,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    isLoading: React.PropTypes.bool,
 	    loadingComponent: React.PropTypes.any,
 	    onFocus: React.PropTypes.func,
+	    onBlur: React.PropTypes.func,
 	    onInput: React.PropTypes.func.isRequired,
 	    onSelect: React.PropTypes.func.isRequired,
 	    tokenAriaFunc: React.PropTypes.func,
@@ -710,6 +850,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  handleFocus: function handleFocus() {
 	    if (this.props.onFocus) {
 	      this.props.onFocus();
+	    }
+	  },
+	
+	  handleBlur: function handleBlur() {
+	    if (this.props.onBlur) {
+	      this.props.onBlur();
 	    }
 	  },
 	
@@ -757,6 +903,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      'aria-label': this.props['combobox-aria-label'],
 	      ariaDisabled: isDisabled,
 	      onFocus: this.handleFocus,
+	      onBlur: this.handleBlur,
 	      onInput: this.handleInput,
 	      showListOnFocus: this.props.showListOnFocus,
 	      onSelect: this.handleSelect,
@@ -769,7 +916,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ }),
-/* 7 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
