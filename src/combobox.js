@@ -148,6 +148,7 @@ module.exports = React.createClass({
       newProps.onFocus = this.handleOptionFocus;
       newProps.onKeyDown = this.handleOptionKeyDown.bind(this, child);
       newProps.onMouseEnter = this.handleOptionMouseEnter.bind(this, index);
+      newProps.onTouchStart = this.handleOptionMouseEnter.bind(this, index);
 
       return React.cloneElement(child, newProps);
     }.bind(this));
