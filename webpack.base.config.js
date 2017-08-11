@@ -73,6 +73,9 @@ class WebpackBaseConfig {
     return {
       // context: this.srcPathAbsolute,
       devtool: 'eval',
+      devServer: {
+
+      },
       module: {
         loaders: [
           {test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/},

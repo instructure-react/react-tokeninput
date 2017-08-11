@@ -6,8 +6,8 @@
  */
 const webpack = require('webpack')
 const WebpackBaseConfig = require('./webpack.base.config')
-// const HtmlWebpackPlugin = require('html-webpack-plugin')
-// var path = require('path');
+const path = require('path');
+
 class WebpackDistConfig extends WebpackBaseConfig {
 
   constructor() {
@@ -15,6 +15,9 @@ class WebpackDistConfig extends WebpackBaseConfig {
     this.config = {
       cache: false,
       devtool: 'source-map',
+      entry: {
+        app: path.resolve(__dirname, './src/index.js'),
+      },
       output: {
         path: path.resolve('./dist'),
         filename: 'react-tokeninput.js',
@@ -59,6 +62,7 @@ class WebpackDistConfig extends WebpackBaseConfig {
         }),
         new webpack.optimize.AggressiveMergingPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
+        // new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
       ]
     };
 

@@ -5,10 +5,9 @@
   "main": "lib/index.js",
   "scripts": {
     "prepublish": "yarn run build",
-    "build": "NODE_ENV=production webpack --config webpack.dist.config.js",
+    "build": "webpack -p --env=prod",
     "test": "node_modules/.bin/karma start",
-    "dev": "webpack --watch --config example/webpack.config.js",
-    "d": "webpack-dev-server --progress --inline --hot"
+    "dev": "webpack-dashboard -t 'Tokeninput' -- webpack-dev-server"
   },
   "repository": {
     "type": "git",
