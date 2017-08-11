@@ -48,11 +48,10 @@
     "react-hot-loader": "next",
     "webpack": "^3.4.1",
     "webpack-build-notifier": "^0.1.16",
+    "webpack-dashboard": "^0.4.0",
     "webpack-dev-server": "^2.6.1"
   },
   "dependencies": {
-    "classnames": "^2.2.1",
-    "object.omit": "^2.0.1",
-    "webpack-dashboard": "^0.4.0"
+    "classnames": "^2.2.1"
   }
 }
