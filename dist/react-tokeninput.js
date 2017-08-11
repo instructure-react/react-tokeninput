@@ -811,110 +811,141 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	var React = __webpack_require__(2);
-	var Combobox = React.createFactory(__webpack_require__(1));
-	var Token = React.createFactory(__webpack_require__(9));
-	var classnames = __webpack_require__(11);
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Main = undefined;
 	
-	var ul = React.DOM.ul;
-	var li = React.DOM.li;
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	module.exports = React.createClass({
-	  displayName: 'exports',
+	var _react = __webpack_require__(2);
 	
-	  propTypes: {
-	    isLoading: React.PropTypes.bool,
-	    loadingComponent: React.PropTypes.any,
-	    onFocus: React.PropTypes.func,
-	    onBlur: React.PropTypes.func,
-	    onInput: React.PropTypes.func.isRequired,
-	    onSelect: React.PropTypes.func.isRequired,
-	    tokenAriaFunc: React.PropTypes.func,
-	    onRemove: React.PropTypes.func.isRequired,
-	    selected: React.PropTypes.array.isRequired,
-	    menuContent: React.PropTypes.any,
-	    showListOnFocus: React.PropTypes.bool,
-	    placeholder: React.PropTypes.string
-	  },
+	var _react2 = _interopRequireDefault(_react);
 	
-	  getInitialState: function getInitialState() {
-	    return {
+	var _classnames = __webpack_require__(11);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	var _combobox = __webpack_require__(1);
+	
+	var _combobox2 = _interopRequireDefault(_combobox);
+	
+	var _token = __webpack_require__(9);
+	
+	var _token2 = _interopRequireDefault(_token);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Combobox = _react2.default.createFactory(_combobox2.default);
+	var Token = _react2.default.createFactory(_token2.default);
+	
+	var ul = _react2.default.DOM.ul;
+	var li = _react2.default.DOM.li;
+	
+	var Main = exports.Main = function (_React$Component) {
+	  _inherits(Main, _React$Component);
+	
+	  function Main(props) {
+	    _classCallCheck(this, Main);
+	
+	    var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
+	
+	    _this.state = {
 	      selectedToken: null
 	    };
-	  },
-	
-	  handleClick: function handleClick() {
-	    // TODO: Expand combobox API for focus
-	    this.refs['combo-li'].querySelector('input').focus();
-	  },
-	
-	  handleFocus: function handleFocus() {
-	    if (this.props.onFocus) {
-	      this.props.onFocus();
-	    }
-	  },
-	
-	  handleBlur: function handleBlur() {
-	    if (this.props.onBlur) {
-	      this.props.onBlur();
-	    }
-	  },
-	
-	  handleInput: function handleInput(inputValue) {
-	    this.props.onInput(inputValue);
-	  },
-	
-	  handleSelect: function handleSelect(event, option) {
-	    var input = this.refs['combo-li'].querySelector('input');
-	    this.props.onSelect(event, option);
-	    this.setState({
-	      selectedToken: null
-	    });
-	    this.props.onInput(input.value);
-	  },
-	
-	  handleRemove: function handleRemove(value) {
-	    var input = this.refs['combo-li'].querySelector('input');
-	    this.props.onRemove(value);
-	    input.focus();
-	  },
-	
-	  handleRemoveLast: function handleRemoveLast() {
-	    this.props.onRemove(this.props.selected[this.props.selected.length - 1]);
-	  },
-	
-	  render: function render() {
-	    var isDisabled = this.props.isDisabled;
-	    var tokens = this.props.selected.map(function (token) {
-	      return Token({
-	        tokenAriaFunc: this.props.tokenAriaFunc,
-	        onFocus: this.handleFocus,
-	        onRemove: this.handleRemove,
-	        value: token,
-	        name: token.name,
-	        key: token.id });
-	    }.bind(this));
-	
-	    var classes = classnames('ic-tokens flex', {
-	      'ic-tokens-disabled': isDisabled
-	    });
-	
-	    return ul({ className: classes, onClick: this.handleClick }, tokens, li({ className: 'inline-flex', ref: 'combo-li' }, Combobox({
-	      id: this.props.id,
-	      'aria-label': this.props['combobox-aria-label'],
-	      ariaDisabled: isDisabled,
-	      onFocus: this.handleFocus,
-	      onBlur: this.handleBlur,
-	      onInput: this.handleInput,
-	      showListOnFocus: this.props.showListOnFocus,
-	      onSelect: this.handleSelect,
-	      onRemoveLast: this.handleRemoveLast,
-	      value: this.state.selectedToken,
-	      isDisabled: isDisabled,
-	      placeholder: this.props.placeholder
-	    }, this.props.menuContent)), this.props.isLoading && li({ className: 'ic-tokeninput-loading flex' }, this.props.loadingComponent));
+	    return _this;
 	  }
-	});
+	
+	  _createClass(Main, [{
+	    key: 'handleClick',
+	    value: function handleClick() {
+	      // TODO: Expand combobox API for focus
+	      this.refs['combo-li'].querySelector('input').focus();
+	    }
+	  }, {
+	    key: 'handleFocus',
+	    value: function handleFocus() {
+	      if (this.props.onFocus) {
+	        this.props.onFocus();
+	      }
+	    }
+	  }, {
+	    key: 'handleBlur',
+	    value: function handleBlur() {
+	      if (this.props.onBlur) {
+	        this.props.onBlur();
+	      }
+	    }
+	  }, {
+	    key: 'handleInput',
+	    value: function handleInput(inputValue) {
+	      this.props.onInput(inputValue);
+	    }
+	  }, {
+	    key: 'handleSelect',
+	    value: function handleSelect(event, option) {
+	      var input = this.refs['combo-li'].querySelector('input');
+	      this.props.onSelect(event, option);
+	      this.setState({
+	        selectedToken: null
+	      });
+	      this.props.onInput(input.value);
+	    }
+	  }, {
+	    key: 'handleRemove',
+	    value: function handleRemove(value) {
+	      var input = this.refs['combo-li'].querySelector('input');
+	      this.props.onRemove(value);
+	      input.focus();
+	    }
+	  }, {
+	    key: 'handleRemoveLast',
+	    value: function handleRemoveLast() {
+	      this.props.onRemove(this.props.selected[this.props.selected.length - 1]);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var isDisabled = this.props.isDisabled;
+	      var tokens = this.props.selected.map(function (token) {
+	        return Token({
+	          tokenAriaFunc: this.props.tokenAriaFunc,
+	          onFocus: this.handleFocus,
+	          onRemove: this.handleRemove,
+	          value: token,
+	          name: token.name,
+	          key: token.id });
+	      }.bind(this));
+	
+	      var classes = (0, _classnames2.default)('ic-tokens flex', {
+	        'ic-tokens-disabled': isDisabled
+	      });
+	
+	      return ul({ className: classes, onClick: this.handleClick }, tokens, li({ className: 'inline-flex', ref: 'combo-li' }, Combobox({
+	        id: this.props.id,
+	        'aria-label': this.props['combobox-aria-label'],
+	        ariaDisabled: isDisabled,
+	        onFocus: this.handleFocus,
+	        onBlur: this.handleBlur,
+	        onInput: this.handleInput,
+	        showListOnFocus: this.props.showListOnFocus,
+	        onSelect: this.handleSelect,
+	        onRemoveLast: this.handleRemoveLast,
+	        value: this.state.selectedToken,
+	        isDisabled: isDisabled,
+	        placeholder: this.props.placeholder
+	      }, this.props.menuContent)), this.props.isLoading && li({ className: 'ic-tokeninput-loading flex' }, this.props.loadingComponent));
+	    }
+	  }]);
+	
+	  return Main;
+	}(_react2.default.Component);
 
 /***/ }),
 /* 11 */

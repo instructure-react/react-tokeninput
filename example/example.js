@@ -1,34 +1,38 @@
-var React = require('react')
-var ReactDOM = require('react-dom')
-var TokenInput = require('../index')
-var ComboboxOption = require('../index').Option
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-var without = require('lodash-node/modern/arrays/without')
-var uniq = require('lodash-node/modern/arrays/uniq')
-var names = require('./names')
+import without from 'lodash/array/without'
+import uniq from 'lodash/array/uniq'
+import find from 'lodash/collection/find'
 
-var App = React.createClass({
-  getInitialState: function() {
-    return {
+import TokenInput, {Option} from '../src/index'
+
+import names from './names'
+
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
       input: '',
       loading: false,
       selected: [],
       options: names
-    };
-  },
+    }
+  }
 
-  handleChange: function(value) {
+  handleChange = (value) => {
     this.setState({
       selected: value
     })
-  },
+  }
 
-  handleRemove: function(value) {
+  handleRemove = (value) => {
     var selectedOptions = uniq(without(this.state.selected,value))
     this.handleChange(selectedOptions)
-  },
+  }
 
-  handleSelect: function(value, combobox) {
+  handleSelect = (value, combobox) => {
     if(typeof value === 'string') {
       value = {id: value, name: value};
     }
@@ -40,9 +44,9 @@ var App = React.createClass({
     })
 
     this.handleChange(selected)
-  },
+  }
 
-  handleInput: function(userInput) {
+  handleInput = (userInput) => {
     this.setState({
       input: userInput,
       loading: true,
@@ -54,37 +58,39 @@ var App = React.createClass({
         loading: false
       })
     }.bind(this), 500)
-  },
+  }
 
-  filterTags: function(userInput) {
+  filterTags = (userInput) => {
     if (userInput === '')
       return this.setState({options: []});
+
     var filter = new RegExp('^'+userInput, 'i');
-    var filteredNames = names.filter(function(state) {
-      return filter.test(state.name); // || filter.test(state.id);
-    }).filter(function(state) {
-      return this.state.selected
-        .map(function(value) { return value.name })
-        .indexOf(state.name) === -1
-    }.bind(this))
+
+    let filteredNames = names.filter((state) => {
+      // match user input
+      let result = filter.test(state.name)
+
+      // make sure it's not already selected
+      return result && !find(this.state.selected, {name: state.name})
+    })
+
     this.setState({
       options: filteredNames
     });
-  },
+  }
 
-  renderComboboxOptions: function() {
+  renderComboboxOptions = () => {
     return this.state.options.map(function(name) {
       return (
-        <ComboboxOption
+        <Option
           key={name.id}
           value={name}
-          isFocusable={name.name.length > 1}
-        >{name.name}</ComboboxOption>
+        >{name.name}</Option>
       );
     });
-  },
+  }
 
-  render: function() {
+  render() {
     var selectedNames = this.state.selected.map(function(tag) {
       return <li key={tag.id}>{tag.name}</li>
     })
@@ -117,8 +123,16 @@ var App = React.createClass({
           {selectedNames}
         </ul>
       </div>
-    );
+    )
   }
-})
+}
 
 ReactDOM.render(<App/>, document.getElementById('application'))
+
+if(module.hot) {
+  module.hot.accept(function(err) {
+    if(err) {
+      console.error("Cannot apply hot update", err);
+    }
+  });
+}
