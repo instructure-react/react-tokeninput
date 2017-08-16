@@ -24,7 +24,7 @@ class WebpackDevConfig extends WebpackBaseConfig {
         port: 8000
       },
       entry: {
-        example: path.resolve(__dirname, './example/example.js'),
+        example: path.resolve(__dirname, './src/example.js'),
         app: path.resolve(__dirname, './src/index.js'),
       },
       plugins: [
