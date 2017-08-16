@@ -21,6 +21,8 @@ class WebpackDistConfig extends WebpackBaseConfig {
       output: {
         path: path.resolve('./dist'),
         filename: 'react-tokeninput.js',
+        library: 'react-tokeninput',
+        libraryTarget: 'umd'
       },
       stats: {
           // Add asset Information
@@ -65,9 +67,6 @@ class WebpackDistConfig extends WebpackBaseConfig {
         // new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
       ]
     };
-
-    // Deactivate hot-reloading if we run dist build on the dev server
-    this.config.devServer.hot = false;
   }
 
   /**

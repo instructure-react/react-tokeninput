@@ -1,7 +1,7 @@
 var React = require('react')
 var TestUtils = require('react-addons-test-utils')
 
-var Tokeninput = React.createFactory(require('../index'))
+var Tokeninput = React.createFactory(require('../src/index'))
 
 describe('Sanity test', function() {
 

@@ -11,6 +11,7 @@ module.exports = (configName) => {
   let LoadedConfig = defaultConfig;
 
   if (webpackConfigs[requestedConfig] !== undefined) {
+    console.log('Using config:', requestedConfig);
     LoadedConfig = webpackConfigs[requestedConfig];
   } else {
     console.warn(`

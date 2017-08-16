@@ -74,7 +74,7 @@ class WebpackBaseConfig {
       // context: this.srcPathAbsolute,
       devtool: 'eval',
       devServer: {
-
+        hot: false
       },
       module: {
         loaders: [

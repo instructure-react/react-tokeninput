@@ -7,6 +7,7 @@ const webpack = require('webpack');
 const WebpackBaseConfig = require('./webpack.base.config');
 var path = require('path')
 const DashboardPlugin = require('webpack-dashboard/plugin');
+
 class WebpackDevConfig extends WebpackBaseConfig {
 
   constructor() {
@@ -28,6 +29,9 @@ class WebpackDevConfig extends WebpackBaseConfig {
         app: path.resolve(__dirname, './src/index.js'),
       },
       plugins: [
+        new webpack.DefinePlugin({
+          'process.env.NODE_ENV': '"development"'
+        }),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
         new webpack.NamedModulesPlugin(),
