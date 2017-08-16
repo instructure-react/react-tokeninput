@@ -58,6 +58,7 @@ class WebpackDistConfig extends WebpackBaseConfig {
           // Add warnings
           warnings: true
       },
+      externals: [/^react/, /lodash-es/],
       plugins: [
         new webpack.DefinePlugin({
           'process.env.NODE_ENV': '"production"'

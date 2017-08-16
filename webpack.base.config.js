@@ -77,9 +77,7 @@ class WebpackBaseConfig {
         hot: false
       },
       module: {
-        loaders: [
-          {test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/},
-        ]
+        rules: [{ test: /\.js$/, loader: 'babel-loader'}]
       },
       output: {
         path: path.resolve('./example'),

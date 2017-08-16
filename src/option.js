@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import omit from 'lodash/object/omit'
+
+import {omit} from 'lodash-es'
 
 import addClass from './add-class'
 

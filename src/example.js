@@ -1,9 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import without from 'lodash/array/without'
-import uniq from 'lodash/array/uniq'
-import find from 'lodash/collection/find'
+import {without, uniq, find} from 'lodash-es'
 
 import TokenInput, {Option} from '../src/index'
 
@@ -40,7 +38,6 @@ class App extends React.Component {
     var selected = uniq(this.state.selected.concat([value]), 'id')
     this.setState({
       selected: selected,
-      selectedToken: null
     })
 
     this.handleChange(selected)

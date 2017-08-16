@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classnames from 'classnames'
 
 import Combobox from './combobox'
 import Token from './token'
@@ -86,9 +85,8 @@ export class Main extends React.Component {
       )
     })
 
-    var classes = classnames('ic-tokens flex', {
-      'ic-tokens-disabled': isDisabled
-    });
+    let classes = 'ic-tokens flex'
+    classes += isDisabled ? ' ic-tokens-disabled' : ''
 
     return (
       <ul className={classes} onClick={this.handleClick}>
