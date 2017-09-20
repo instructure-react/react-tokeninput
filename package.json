@@ -3,7 +3,6 @@
   "version": "2.5.0",
   "description": "Tokeninput component for React",
   "main": "dist/react-tokeninput.js",
-  "module": "src/index.js",
   "scripts": {
     "prepublish": "yarn run build",
     "build": "webpack -p --env=prod",
