@@ -5,3 +5,4 @@ tmp
 !lib/
 example/bundle.js
 yarn.lock
+stats.json

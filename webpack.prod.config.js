@@ -13,6 +13,8 @@ class WebpackDistConfig extends WebpackBaseConfig {
   constructor() {
     super();
     this.config = {
+      // Don't attempt to continue if there are any errors.
+      bail: true,
       cache: false,
       devtool: 'source-map',
       entry: {
@@ -21,8 +23,7 @@ class WebpackDistConfig extends WebpackBaseConfig {
       output: {
         path: path.resolve('./dist'),
         filename: 'react-tokeninput.js',
-        library: 'react-tokeninput',
-        libraryTarget: 'umd'
+        library: 'Tokeninput'
       },
       stats: {
           // Add asset Information
@@ -58,7 +59,25 @@ class WebpackDistConfig extends WebpackBaseConfig {
           // Add warnings
           warnings: true
       },
-      externals: [/^react/, /lodash-es/],
+      // externals: [/^react/, /^lodash/],
+      // externals : {
+      //   'react': 'react',
+      //   'lodash-es': 'lodash',
+      // },
+      externals: {
+        'react': {
+           commonjs: 'react',
+           commonjs2: 'react',
+           amd: 'react',
+           root: 'react'
+        },
+        'lodash-es': {
+          commonjs: 'lodash',
+          commonjs2: 'lodash',
+          amd: 'lodash',
+          root: '_'
+        }
+      },
       plugins: [
         new webpack.DefinePlugin({
           'process.env.NODE_ENV': '"production"'
