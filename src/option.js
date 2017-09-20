@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import {omit} from 'lodash-es'
 
-import addClass from './add-class'
+import addClass from './add-class.js'
 
 export class Option extends React.Component {
   static propTypes = {

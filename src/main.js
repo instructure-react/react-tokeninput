@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Combobox from './combobox'
-import Token from './token'
+import Combobox from './combobox.js'
+import Token from './token.js'
 
 export class Main extends React.Component {
   static propTypes = {

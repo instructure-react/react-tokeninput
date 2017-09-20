@@ -1,7 +1,7 @@
-import TokenInput from './main';
+import TokenInput from './main.js';
 
-export Combobox from './combobox';
-export Option from './option';
-export Token from './token';
+export Combobox from './combobox.js';
+export Option from './option.js';
+export Token from './token.js';
 
 export default TokenInput

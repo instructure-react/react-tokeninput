@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import addClass from './add-class'
-import ComboboxOption from './option'
+import addClass from './add-class.js'
+import ComboboxOption from './option.js'
 
 let guid = 0;
 let k = () => {};
