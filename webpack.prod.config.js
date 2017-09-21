@@ -58,9 +58,13 @@ class WebpackDistConfig extends WebpackBaseConfig {
           // Add warnings
           warnings: true
       },
-      externals: [/^react/, /^lodash/],
+      // externals: [/^react/, /^lodash/],
       // externals : {
       //   'react': 'react',
+        // 'lodash-es': 'lodash',
+      // },
+      // externals : {
+      //   'react': 'React',
       //   'lodash-es': 'lodash',
       // },
       // externals: {
@@ -83,7 +87,7 @@ class WebpackDistConfig extends WebpackBaseConfig {
         }),
         new webpack.optimize.AggressiveMergingPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
-        new webpack.IgnorePlugin(/prop-types$/),
+        // new webpack.IgnorePlugin(/prop-types$/),
         // new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
       ]
     };
