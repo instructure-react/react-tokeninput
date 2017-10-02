@@ -1,46 +1,51 @@
-var React = require('react');
-var addClass = require('./add-class');
-var div = React.createFactory('div');
+import React from 'react'
+import PropTypes from 'prop-types'
 
-module.exports = React.createClass({
+import {omit} from 'lodash-es'
 
-  propTypes: {
+import addClass from './add-class.js'
 
-    /**
-     * The value that will be sent to the `onSelect` handler of the
-     * parent Combobox.
-    */
-    value: React.PropTypes.any.isRequired,
-
-    /**
-     * What value to put into the input element when this option is
-     * selected, defaults to its children coerced to a string.
-    */
-    label: React.PropTypes.string,
-
-    /**
-     * Whether the element should be selectable
-    */
-    isFocusable: React.PropTypes.bool
-  },
-
-  getDefaultProps: function() {
-    return {
+export class Option extends React.Component {
+  static defaultProps = {
       role: 'option',
       tabIndex: '-1',
       className: 'ic-tokeninput-option',
       isSelected: false,
       isFocusable: true
-    };
-  },
+  }
 
-  render: function() {
-    var props = this.props;
+  render() {
+    let props = this.props;
+
     if (props.isSelected) {
       props.className = addClass(props.className, 'ic-tokeninput-selected');
       props.ariaSelected = true;
     }
-    return div(props);
-  }
 
-});
+    return (
+      <div {...omit(props, 'isSelected', 'isFocusable')} />
+    )
+  }
+}
+
+Option.propTypes /* remove-proptypes */ = {
+
+  /**
+   * The value that will be sent to the `onSelect` handler of the
+   * parent Combobox.
+  */
+  value: PropTypes.any.isRequired,
+
+  /**
+   * What value to put into the input element when this option is
+   * selected, defaults to its children coerced to a string.
+  */
+  label: PropTypes.string,
+
+  /**
+   * Whether the element should be selectable
+  */
+  isFocusable: PropTypes.bool
+}
+
+export default Option

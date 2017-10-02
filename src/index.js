@@ -1,13 +1,8 @@
-export Combobox from './combobox';
-export Option from './option';
-export Token from './token';
-import main from './main';
+import React from 'react'
+import TokenInput from './main.js';
 
-/**
- * You can't do an import and then immediately export it :(
- * And `export default TokenInput from './main'` doesn't seem to
- * work either :(
- * So this little variable swapping stuff gets it to work.
- */
-const TokenInput = main;
-export default TokenInput;
+export Combobox from './combobox.js';
+export Option from './option.js';
+export Token from './token.js';
+
+export default TokenInput
