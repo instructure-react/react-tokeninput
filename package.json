@@ -1,6 +1,6 @@
 {
   "name": "react-tokeninput",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "description": "Tokeninput component for React",
   "main": "dist/react-tokeninput.js",
   "scripts": {
@@ -30,8 +30,8 @@
     "babel-eslint": "7.2.3",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
-    "babel-preset-stage-1": "^6.24.1",
     "babel-preset-react": "6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
     "chai": "^1.10.0",
     "eslint": "^4.2.0",
     "karma": "^0.13.0",
@@ -51,8 +51,9 @@
     "webpack-dev-server": "^2.8.2"
   },
   "dependencies": {
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.9",
     "lodash-es": "^4.17.4",
-    "react": "^16.0.0-rc.3",
-    "react-dom": "^16.0.0-rc.3"
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
   }
 }

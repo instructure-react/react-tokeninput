@@ -1,2 +1,6 @@
+## 2.5.1: (02 Oct 2017)
+ - Upgraded ref links
+ - Removed react libs from build
+
 ## 2.5.0: (16 Aug 2017)
- - Huge refactor to make it all ES6+
+- Huge refactor to make it all ES6+

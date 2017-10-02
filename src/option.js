@@ -6,26 +6,6 @@ import {omit} from 'lodash-es'
 import addClass from './add-class.js'
 
 export class Option extends React.Component {
-  static propTypes = {
-
-    /**
-     * The value that will be sent to the `onSelect` handler of the
-     * parent Combobox.
-    */
-    value: PropTypes.any.isRequired,
-
-    /**
-     * What value to put into the input element when this option is
-     * selected, defaults to its children coerced to a string.
-    */
-    label: PropTypes.string,
-
-    /**
-     * Whether the element should be selectable
-    */
-    isFocusable: PropTypes.bool
-  }
-
   static defaultProps = {
       role: 'option',
       tabIndex: '-1',
@@ -46,6 +26,26 @@ export class Option extends React.Component {
       <div {...omit(props, 'isSelected', 'isFocusable')} />
     )
   }
+}
+
+Option.propTypes /* remove-proptypes */ = {
+
+  /**
+   * The value that will be sent to the `onSelect` handler of the
+   * parent Combobox.
+  */
+  value: PropTypes.any.isRequired,
+
+  /**
+   * What value to put into the input element when this option is
+   * selected, defaults to its children coerced to a string.
+  */
+  label: PropTypes.string,
+
+  /**
+   * Whether the element should be selectable
+  */
+  isFocusable: PropTypes.bool
 }
 
 export default Option

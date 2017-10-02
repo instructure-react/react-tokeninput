@@ -5,21 +5,6 @@ import Combobox from './combobox.js'
 import Token from './token.js'
 
 export class Main extends React.Component {
-  static propTypes = {
-    isLoading: PropTypes.bool,
-    loadingComponent: PropTypes.any,
-    onFocus: PropTypes.func,
-    onBlur: PropTypes.func,
-    onInput: PropTypes.func.isRequired,
-    onSelect: PropTypes.func.isRequired,
-    tokenAriaFunc: PropTypes.func,
-    onRemove: PropTypes.func.isRequired,
-    selected: PropTypes.array.isRequired,
-    menuContent: PropTypes.any,
-    showListOnFocus: PropTypes.bool,
-    placeholder: PropTypes.string
-  }
-
   constructor(props) {
     super(props)
 
@@ -32,7 +17,7 @@ export class Main extends React.Component {
 
   handleClick = () => {
     // TODO: Expand combobox API for focus
-    this.refs['combo-li'].querySelector('input').focus();
+    this.comboLi.querySelector('input').focus();
   }
 
   handleFocus = () => {
@@ -52,7 +37,7 @@ export class Main extends React.Component {
   }
 
   handleSelect = (event, option) => {
-    var input = this.refs['combo-li'].querySelector('input');
+    var input = this.comboLi.querySelector('input');
     this.props.onSelect(event, option)
     this.setState({
       selectedToken: null
@@ -61,7 +46,7 @@ export class Main extends React.Component {
   }
 
   handleRemove = (value) => {
-    var input = this.refs['combo-li'].querySelector('input');
+    var input = this.comboLi.querySelector('input');
     this.props.onRemove(value);
     input.focus();
   }
@@ -91,7 +76,7 @@ export class Main extends React.Component {
     return (
       <ul className={classes} onClick={this.handleClick}>
         {tokens}
-        <li className='inline-flex' ref='combo-li'>
+        <li className='inline-flex' ref={(ref) => this.comboLi = ref}>
           <Combobox
             id={this.props.id}
             aria-label={this.props['combobox-aria-label']}
@@ -116,6 +101,21 @@ export class Main extends React.Component {
       </ul>
     )
   }
+}
+
+Main.propTypes = {
+  isLoading: PropTypes.bool,
+  loadingComponent: PropTypes.any,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
+  onInput: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
+  tokenAriaFunc: PropTypes.func,
+  onRemove: PropTypes.func.isRequired,
+  selected: PropTypes.array.isRequired,
+  menuContent: PropTypes.any,
+  showListOnFocus: PropTypes.bool,
+  placeholder: PropTypes.string
 }
 
 export default Main

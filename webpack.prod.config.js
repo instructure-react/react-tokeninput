@@ -17,12 +17,10 @@ class WebpackDistConfig extends WebpackBaseConfig {
       bail: true,
       cache: false,
       devtool: 'source-map',
-      entry: {
-        app: path.resolve(__dirname, './src/index.js'),
-      },
       output: {
         path: path.resolve('./dist'),
         filename: 'react-tokeninput.js',
+        libraryTarget: 'umd'
       },
       stats: {
           // Add asset Information
@@ -58,37 +56,38 @@ class WebpackDistConfig extends WebpackBaseConfig {
           // Add warnings
           warnings: true
       },
-      // externals: [/^react/, /^lodash/],
-      // externals : {
-      //   'react': 'react',
-        // 'lodash-es': 'lodash',
-      // },
-      // externals : {
-      //   'react': 'React',
-      //   'lodash-es': 'lodash',
-      // },
-      // externals: {
-      //   'react': {
-      //      commonjs: 'react',
-      //      commonjs2: 'react',
-      //      amd: 'react',
-      //      root: 'react'
-      //   },
-      //   'lodash-es': {
-      //     commonjs: 'lodash',
-      //     commonjs2: 'lodash',
-      //     amd: 'lodash',
-      //     root: '_'
-      //   }
-      // },
+      externals: [/^react/, /^lodash/],
       plugins: [
         new webpack.DefinePlugin({
           'process.env.NODE_ENV': '"production"'
         }),
         new webpack.optimize.AggressiveMergingPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
-        // new webpack.IgnorePlugin(/prop-types$/),
-        // new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
+
+        // new webpack.IgnorePlugin(/prop-types$/), // <- cannot get this working
+        // need to put this in .bablerc too:
+        // "production": {
+        //     "plugins": ["transform-react-remove-prop-types"]
+        // }
+
+        // Minify the code.
+        new webpack.optimize.UglifyJsPlugin({
+          compress: {
+            warnings: false,
+            // Disabled because of an issue with Uglify breaking seemingly valid code:
+            // https://github.com/facebookincubator/create-react-app/issues/2376
+            // Pending further investigation:
+            // https://github.com/mishoo/UglifyJS2/issues/2011
+            comparisons: false,
+          },
+          output: {
+            comments: false,
+            // Turned on because emoji and regex is not minified properly using default
+            // https://github.com/facebookincubator/create-react-app/issues/2488
+            ascii_only: true,
+          },
+          sourceMap: true,
+        }),
       ]
     };
   }

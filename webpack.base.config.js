@@ -76,6 +76,9 @@ class WebpackBaseConfig {
       devServer: {
         hot: false
       },
+      entry: {
+        app: path.resolve(__dirname, './src/index.js'),
+      },
       module: {
         rules: [{ test: /\.js$/, loader: 'babel-loader'}]
       },

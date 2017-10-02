@@ -8,60 +8,6 @@ let guid = 0;
 let k = () => {};
 
 export class Combobox extends React.Component {
-
-  static propTypes = {
-    /**
-     * Called when the combobox's input receives focus and the user begins interacting with it.
-     *
-     * Signature:
-     *
-     * ```js
-     * function(userInput){}
-     * ```
-    */
-    onFocus: PropTypes.func,
-
-    /**
-     * Called when the combobox's input loses focus after being activated for user input
-     *
-     * Signature:
-     *
-     * ```js
-     * function(userInput){}
-     * ```
-    */
-    onBlur: PropTypes.func,
-
-    /**
-     * Called when the combobox receives user input, this is your chance to
-     * filter the data and rerender the options.
-     *
-     * Signature:
-     *
-     * ```js
-     * function(userInput){}
-     * ```
-    */
-    onInput: PropTypes.func,
-
-    /**
-     * Called when the combobox receives a selection. You probably want to reset
-     * the options to the full list at this point.
-     *
-     * Signature:
-     *
-     * ```js
-     * function(selectedValue){}
-     * ```
-    */
-    onSelect: PropTypes.func,
-
-    /**
-     * Shown when the combobox is empty.
-    */
-    placeholder: PropTypes.string
-  }
-
   static defaultProps = {
     autocomplete: 'both',
     onFocus: k,
@@ -100,7 +46,7 @@ export class Combobox extends React.Component {
 
   componentWillReceiveProps(newProps) {
     this.setState({menu: this.makeMenu(newProps.children)}, () => {
-      if(newProps.children.length && (this.isOpen || document.activeElement === this.refs.input)) {
+      if(newProps.children.length && (this.isOpen || document.activeElement === this.input)) {
         if(!this.state.menu.children.length) {
           return
         }
@@ -108,7 +54,7 @@ export class Combobox extends React.Component {
         this.setState({
           isOpen: true
         }, () => {
-          this.refs.list.scrollTop = 0;
+          this.list.scrollTop = 0;
         })
 
       } else {
@@ -185,7 +131,7 @@ export class Combobox extends React.Component {
   }
 
   handleInputChange = () => {
-    var value = this.refs.input.value;
+    var value = this.input.value;
     this.clearSelectedState(function() {
       this.props.onInput(value);
     }.bind(this));
@@ -261,11 +207,11 @@ export class Combobox extends React.Component {
   }
 
   focusInput = () => {
-    this.refs.input.focus();
+    this.input.focus();
   }
 
   selectInput = () => {
-    this.refs.input.select();
+    this.input.select();
   }
 
   inputKeydownMap = {
@@ -339,15 +285,15 @@ export class Combobox extends React.Component {
       if (options.focus !== false)
         this.selectInput();
     }.bind(this));
-    this.refs.input.value = '' // added
+    this.input.value = '' // added
   }
 
   selectText = () => {
-    var value = this.refs.input.value;
+    var value = this.input.value;
     if(!value) return;
     this.props.onSelect(value);
     this.clearSelectedState();
-    this.refs.input.value = '' // added
+    this.input.value = '' // added
   }
 
   focusNext = (event) => {
@@ -358,7 +304,7 @@ export class Combobox extends React.Component {
   }
 
   removeLastToken = () => {
-    if(this.props.onRemoveLast && !this.refs.input.value) {
+    if(this.props.onRemoveLast && !this.input.value) {
       this.props.onRemoveLast()
     }
     return true
@@ -445,7 +391,7 @@ export class Combobox extends React.Component {
 
   focusOption = () => {
     var index = this.state.focusedIndex;
-    this.refs.list.childNodes[index].focus();
+    this.list.childNodes[index].focus();
   }
 
   render() {
@@ -459,7 +405,7 @@ export class Combobox extends React.Component {
         {this.props.value}
         {this.state.inputValue}
         <input
-          ref='input'
+          ref={(ref) => this.input = ref}
           autoComplete='off'
           spellCheck='false'
           aria-label={ariaLabel}
@@ -487,12 +433,65 @@ export class Combobox extends React.Component {
         >
           ▾
         </span>
-        <div id='this.state.listId' ref='list' className='ic-tokeninput-list' role='listbox'>
+        <div id={'id-' + this.state.listId} ref={(ref) => this.list = ref} className='ic-tokeninput-list' role='listbox'>
           {this.state.menu.children}
         </div>
       </div>
     )
   }
+}
+
+Combobox.propTypes = {
+  /**
+   * Called when the combobox's input receives focus and the user begins interacting with it.
+   *
+   * Signature:
+   *
+   * ```js
+   * function(userInput){}
+   * ```
+  */
+  onFocus: PropTypes.func,
+
+  /**
+   * Called when the combobox's input loses focus after being activated for user input
+   *
+   * Signature:
+   *
+   * ```js
+   * function(userInput){}
+   * ```
+  */
+  onBlur: PropTypes.func,
+
+  /**
+   * Called when the combobox receives user input, this is your chance to
+   * filter the data and rerender the options.
+   *
+   * Signature:
+   *
+   * ```js
+   * function(userInput){}
+   * ```
+  */
+  onInput: PropTypes.func,
+
+  /**
+   * Called when the combobox receives a selection. You probably want to reset
+   * the options to the full list at this point.
+   *
+   * Signature:
+   *
+   * ```js
+   * function(selectedValue){}
+   * ```
+  */
+  onSelect: PropTypes.func,
+
+  /**
+   * Shown when the combobox is empty.
+  */
+  placeholder: PropTypes.string
 }
 
 function getLabel(component) {
