@@ -1880,7 +1880,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var React = __webpack_require__(2);
 	var ReactDOM = __webpack_require__(15);
 	var createReactClass = __webpack_require__(3);
-	var span = ReactDOM.span;
+	var span = React.createFactory("span");
 	var li = React.createFactory('li');
 	
 	module.exports = createReactClass({
