@@ -1,5 +1,5 @@
 var React = require('react')
-var TestUtils = require('react-addons-test-utils')
+var TestUtils = require('react-dom/test-utils')
 
 var Combobox = React.createFactory(require('../src/combobox'))
 var Option = React.createFactory(require('../src/option'))
