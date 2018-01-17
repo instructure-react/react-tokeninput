@@ -1,24 +1,27 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
+var createReactClass = require('create-react-class');
+var PropTypes = require('prop-types');
 var Combobox = React.createFactory(require('./combobox'));
 var Token = React.createFactory(require('./token'));
 var classnames = require('classnames');
 
-var ul = React.DOM.ul;
-var li = React.DOM.li;
+var ul = React.createFactory("ul");
+var li = React.createFactory("li");
 
-module.exports = React.createClass({
+module.exports = createReactClass({
   propTypes: {
-    isLoading: React.PropTypes.bool,
-    loadingComponent: React.PropTypes.any,
-    onFocus: React.PropTypes.func,
-    onInput: React.PropTypes.func.isRequired,
-    onSelect: React.PropTypes.func.isRequired,
-    tokenAriaFunc: React.PropTypes.func,
-    onRemove: React.PropTypes.func.isRequired,
-    selected: React.PropTypes.array.isRequired,
-    menuContent: React.PropTypes.any,
-    showListOnFocus: React.PropTypes.bool,
-    placeholder: React.PropTypes.string
+    isLoading: PropTypes.bool,
+    loadingComponent: PropTypes.any,
+    onFocus: PropTypes.func,
+    onInput: PropTypes.func.isRequired,
+    onSelect: PropTypes.func.isRequired,
+    tokenAriaFunc: PropTypes.func,
+    onRemove: PropTypes.func.isRequired,
+    selected: PropTypes.array.isRequired,
+    menuContent: PropTypes.any,
+    showListOnFocus: PropTypes.bool,
+    placeholder: PropTypes.string
   },
 
   getInitialState: function() {
