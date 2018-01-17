@@ -43,7 +43,6 @@
     "mocha": "^2.0.1",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
-    "react-addons-test-utils": "^15.6.2",
     "react-dom": "^16.2.0",
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.12.0"
