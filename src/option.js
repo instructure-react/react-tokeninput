@@ -1,3 +1,4 @@
+var PropTypes = require('prop-types');
 var React = require('react');
 var addClass = require('./add-class');
 var div = React.createFactory('div');
@@ -9,18 +10,18 @@ class Option extends React.Component {
      * The value that will be sent to the `onSelect` handler of the
      * parent Combobox.
     */
-    value: React.PropTypes.any.isRequired,
+    value: PropTypes.any.isRequired,
 
     /**
      * What value to put into the input element when this option is
      * selected, defaults to its children coerced to a string.
     */
-    label: React.PropTypes.string,
+    label: PropTypes.string,
 
     /**
      * Whether the element should be selectable
     */
-    isFocusable: React.PropTypes.bool
+    isFocusable: PropTypes.bool
   };
 
   static defaultProps = {
@@ -39,6 +40,6 @@ class Option extends React.Component {
     }
     return div(props);
   }
-};
+}
 
 module.exports = Option;

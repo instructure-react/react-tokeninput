@@ -10,7 +10,8 @@ module.exports = {
 
   externals: [
     'react',
-    'react-dom'
+    'react-dom',
+    'prop-types'
   ],
 
   output: {
