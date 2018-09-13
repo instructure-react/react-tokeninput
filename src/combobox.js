@@ -1,3 +1,4 @@
+var PropTypes = require('prop-types');
 var React = require('react');
 var guid = 0;
 var k = function(){};
@@ -10,7 +11,7 @@ var input = React.createFactory('input');
 
 class Combobox extends React.Component {
   static propTypes = {
-    onFocus: React.PropTypes.func,
+    onFocus: PropTypes.func,
 
     /**
      * Called when the combobox receives user input, this is your chance to
@@ -22,7 +23,7 @@ class Combobox extends React.Component {
      * function(userInput){}
      * ```
     */
-    onInput: React.PropTypes.func,
+    onInput: PropTypes.func,
 
     /**
      * Called when the combobox receives a selection. You probably want to reset
@@ -34,12 +35,12 @@ class Combobox extends React.Component {
      * function(selectedValue){}
      * ```
     */
-    onSelect: React.PropTypes.func,
+    onSelect: PropTypes.func,
 
     /**
      * Shown when the combobox is empty.
     */
-    placeholder: React.PropTypes.string
+    placeholder: PropTypes.string
   };
 
   static defaultProps = {
@@ -455,7 +456,7 @@ class Combobox extends React.Component {
       }, this.state.menu.children)
     );
   }
-};
+}
 
 function getLabel(component) {
   return component.props.label || component.props.children;

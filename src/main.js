@@ -1,3 +1,4 @@
+var PropTypes = require('prop-types');
 var React = require('react');
 var Combobox = React.createFactory(require('./combobox'));
 var Token = React.createFactory(require('./token'));
@@ -8,17 +9,17 @@ var li = React.DOM.li;
 
 class TokenInput extends React.Component {
   static propTypes = {
-    isLoading: React.PropTypes.bool,
-    loadingComponent: React.PropTypes.any,
-    onFocus: React.PropTypes.func,
-    onInput: React.PropTypes.func.isRequired,
-    onSelect: React.PropTypes.func.isRequired,
-    tokenAriaFunc: React.PropTypes.func,
-    onRemove: React.PropTypes.func.isRequired,
-    selected: React.PropTypes.array.isRequired,
-    menuContent: React.PropTypes.any,
-    showListOnFocus: React.PropTypes.bool,
-    placeholder: React.PropTypes.string
+    isLoading: PropTypes.bool,
+    loadingComponent: PropTypes.any,
+    onFocus: PropTypes.func,
+    onInput: PropTypes.func.isRequired,
+    onSelect: PropTypes.func.isRequired,
+    tokenAriaFunc: PropTypes.func,
+    onRemove: PropTypes.func.isRequired,
+    selected: PropTypes.array.isRequired,
+    menuContent: PropTypes.any,
+    showListOnFocus: PropTypes.bool,
+    placeholder: PropTypes.string
   };
 
   state = {
