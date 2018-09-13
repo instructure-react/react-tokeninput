@@ -2,22 +2,22 @@ var React = require('react');
 var span = React.DOM.span;
 var li = React.createFactory('li');
 
-module.exports = React.createClass({
-  handleClick: function() {
+module.exports = class extends React.Component {
+  handleClick = () => {
     this.props.onRemove(this.props.value)
-  },
+  };
 
-  handleKeyDown: function(key) {
+  handleKeyDown = (key) => {
     var enterKey = 13;
     if(key.keyCode === enterKey) this.props.onRemove(this.props.value)
-  },
+  };
 
-  ariaLabelRemove: function ariaLabelRemove() {
+  ariaLabelRemove = () => {
     return this.props.tokenAriaFunc ? this.props.tokenAriaFunc(this.props.name) :
       'Remove \'' + this.props.name + '\'';
-  },
+  };
 
-  render: function() {
+  render() {
     return (
       li({
         className: "ic-token inline-flex"
@@ -35,4 +35,4 @@ module.exports = React.createClass({
       )
     )
   }
-})
+}

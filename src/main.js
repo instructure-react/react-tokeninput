@@ -6,8 +6,8 @@ var classnames = require('classnames');
 var ul = React.DOM.ul;
 var li = React.DOM.li;
 
-module.exports = React.createClass({
-  propTypes: {
+class TokenInput extends React.Component {
+  static propTypes = {
     isLoading: React.PropTypes.bool,
     loadingComponent: React.PropTypes.any,
     onFocus: React.PropTypes.func,
@@ -19,49 +19,47 @@ module.exports = React.createClass({
     menuContent: React.PropTypes.any,
     showListOnFocus: React.PropTypes.bool,
     placeholder: React.PropTypes.string
-  },
+  };
 
-  getInitialState: function() {
-    return {
-      selectedToken: null
-    };
-  },
+  state = {
+    selectedToken: null
+  };
 
-  handleClick: function() {
+  handleClick = () => {
     // TODO: Expand combobox API for focus
     this.refs['combo-li'].querySelector('input').focus();
-  },
+  };
 
-  handleFocus: function() {
+  handleFocus = () => {
     if (this.props.onFocus) {
       this.props.onFocus();
     }
-  },
+  };
 
-  handleInput: function(inputValue) {
+  handleInput = (inputValue) => {
     this.props.onInput(inputValue);
-  },
+  };
 
-  handleSelect: function(event, option) {
+  handleSelect = (event, option) => {
     var input = this.refs['combo-li'].querySelector('input');
     this.props.onSelect(event, option)
     this.setState({
       selectedToken: null
     })
     this.props.onInput(input.value);
-  },
+  };
 
-  handleRemove: function(value) {
+  handleRemove = (value) => {
     var input = this.refs['combo-li'].querySelector('input');
     this.props.onRemove(value);
     input.focus();
-  },
+  };
 
-  handleRemoveLast: function() {
+  handleRemoveLast = () => {
     this.props.onRemove(this.props.selected[this.props.selected.length - 1]);
-  },
+  };
 
-  render: function() {
+  render() {
     var isDisabled = this.props.isDisabled;
     var tokens = this.props.selected.map(function(token) {
       return (
@@ -101,4 +99,6 @@ module.exports = React.createClass({
       this.props.isLoading && li({className: 'ic-tokeninput-loading flex'}, this.props.loadingComponent)
     );
   }
-})
+}
+
+module.exports = TokenInput
