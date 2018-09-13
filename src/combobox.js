@@ -5,10 +5,6 @@ var k = function(){};
 var addClass = require('./add-class');
 var ComboboxOption = require('./option');
 
-var div = React.createFactory('div');
-var span = React.createFactory('span');
-var input = React.createFactory('input');
-
 class Combobox extends React.Component {
   static propTypes = {
     onFocus: PropTypes.func,
@@ -418,42 +414,45 @@ class Combobox extends React.Component {
       'acceptable option, you can input an alternative. Once you find or ' +
       'input the tag you want, press Enter or Comma to add it.'
 
-    return div({className: this.getClassName()},
-      this.props.value,
-      this.state.inputValue,
-      input({
-        ref: 'input',
-        autoComplete: 'off',
-        spellCheck: 'false',
-        'aria-label': ariaLabel,
-        'aria-expanded': this.state.isOpen+'',
-        'aria-haspopup': 'true',
-        'aria-activedescendant': this.state.menu.activedescendant,
-        'aria-autocomplete': 'list',
-        'aria-owns': this.state.listId,
-        id: this.props.id,
-        disabled: this.props.isDisabled,
-        className: 'ic-tokeninput-input',
-        onFocus: this.handleInputFocus,
-        onClick: this.handleInputClick,
-        onChange: this.handleInputChange,
-        onBlur: this.handleInputBlur,
-        onKeyDown: this.handleKeydown,
-        onKeyUp: this.handleInputKeyUp,
-        placeholder: this.props.placeholder,
-        role: 'combobox'
-      }),
-      span({
-        'aria-hidden': 'true',
-        className: 'ic-tokeninput-button',
-        onClick: this.handleButtonClick
-      }, '▾'),
-      div({
-        id: this.state.listId,
-        ref: 'list',
-        className: 'ic-tokeninput-list',
-        role: 'listbox'
-      }, this.state.menu.children)
+    return (
+      <div className={this.getClassName()}>
+        {this.props.value}
+        {this.state.inputValue}
+        <input
+          ref="input"
+          autoComplete="off"
+          spellCheck="false"
+          aria-label={ariaLabel}
+          aria-expanded={this.state.isOpen+''}
+          aria-haspopup="true"
+          aria-activedescendant={this.state.menu.activedescendant}
+          aria-autocomplete="list"
+          aria-owns={this.state.listId}
+          id={this.props.id}
+          disabled={this.props.isDisabled}
+          className="ic-tokeninput-input"
+          onFocus={this.handleInputFocus}
+          onClick={this.handleInputClick}
+          onChange={this.handleInputChange}
+          onBlur={this.handleInputBlur}
+          onKeyDown={this.handleKeydown}
+          onKeyUp={this.handleInputKeyUp}
+          placeholder={this.props.placeholder}
+          role="combobox" />
+        <span
+          aria-hidden="true"
+          className="ic-tokeninput-button"
+          onClick={this.handleButtonClick}>
+          ▾
+        </span>
+        <div
+          id={this.state.listId}
+          ref="list"
+          className="ic-tokeninput-list"
+          role="listbox">
+          {this.state.menu.children}
+        </div>
+      </div>
     );
   }
 }

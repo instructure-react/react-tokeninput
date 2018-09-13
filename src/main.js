@@ -1,11 +1,8 @@
 var PropTypes = require('prop-types');
 var React = require('react');
-var Combobox = React.createFactory(require('./combobox'));
-var Token = React.createFactory(require('./token'));
+var Combobox = require('./combobox');
+var Token = require('./token');
 var classnames = require('classnames');
-
-var ul = React.DOM.ul;
-var li = React.DOM.li;
 
 class TokenInput extends React.Component {
   static propTypes = {
@@ -64,40 +61,43 @@ class TokenInput extends React.Component {
     var isDisabled = this.props.isDisabled;
     var tokens = this.props.selected.map(function(token) {
       return (
-        Token({
-          tokenAriaFunc: this.props.tokenAriaFunc,
-          onFocus: this.handleFocus,
-          onRemove: this.handleRemove,
-          value: token,
-          name: token.name,
-          key: token.id})
-      )
+        <Token
+          tokenAriaFunc={this.props.tokenAriaFunc}
+          onFocus={this.handleFocus}
+          onRemove={this.handleRemove}
+          value={token}
+          name={token.name}
+          key={token.id} />
+      );
     }.bind(this))
 
     var classes = classnames('ic-tokens flex', {
       'ic-tokens-disabled': isDisabled
     });
 
-    return ul({className: classes, onClick: this.handleClick},
-      tokens,
-      li({className: 'inline-flex', ref: 'combo-li'},
-        Combobox({
-          id: this.props.id,
-          'aria-label': this.props['combobox-aria-label'],
-          ariaDisabled: isDisabled,
-          onFocus: this.handleFocus,
-          onInput: this.handleInput,
-          showListOnFocus: this.props.showListOnFocus,
-          onSelect: this.handleSelect,
-          onRemoveLast: this.handleRemoveLast,
-          value: this.state.selectedToken,
-          isDisabled: isDisabled,
-          placeholder: this.props.placeholder
-        },
-          this.props.menuContent
-        )
-      ),
-      this.props.isLoading && li({className: 'ic-tokeninput-loading flex'}, this.props.loadingComponent)
+    return (
+      <ul className={classes} onClick={this.handleClick}>
+        {tokens}
+        <li className="inline-flex" ref="combo-li">
+          <Combobox
+            id={this.props.id}
+            aria-label={this.props['combobox-aria-label']}
+            ariaDisabled={isDisabled}
+            onFocus={this.handleFocus}
+            onInput={this.handleInput}
+            showListOnFocus={this.props.showListOnFocus}
+            onSelect={this.handleSelect}
+            onRemoveLast={this.handleRemoveLast}
+            value={this.state.selectedToken}
+            isDisabled={isDisabled}
+            placeholder={this.props.placeholder}>
+            {this.props.menuContent}
+          </Combobox>
+        </li>
+        {this.props.isLoading && <li className="ic-tokeninput-loading flex">
+          {this.props.loadingComponent}
+        </li>}
+      </ul>
     );
   }
 }
