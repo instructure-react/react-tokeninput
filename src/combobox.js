@@ -54,14 +54,14 @@ class Combobox extends React.Component {
 
   componentWillReceiveProps(newProps) {
     this.setState({menu: this.makeMenu(newProps.children)}, function() {
-      if(newProps.children.length && (this.isOpen || document.activeElement === this.refs.input)) {
+      if(newProps.children.length && (this.isOpen || document.activeElement === this.input)) {
         if(!this.state.menu.children.length) {
           return
         }
         this.setState({
           isOpen: true
         }, function() {
-          this.refs.list.scrollTop = 0;
+          this.list.scrollTop = 0;
         }.bind(this))
       } else {
         this.hideList();
@@ -134,7 +134,7 @@ class Combobox extends React.Component {
   };
 
   handleInputChange = () => {
-    var value = this.refs.input.value;
+    var value = this.input.value;
     this.clearSelectedState(function() {
       this.props.onInput(value);
     }.bind(this));
@@ -208,11 +208,11 @@ class Combobox extends React.Component {
   };
 
   focusInput = () => {
-    this.refs.input.focus();
+    this.input.focus();
   };
 
   selectInput = () => {
-    this.refs.input.select();
+    this.input.select();
   }
 
   inputKeydownMap = {
@@ -285,15 +285,15 @@ class Combobox extends React.Component {
       if (options.focus !== false)
         this.selectInput();
     }.bind(this));
-    this.refs.input.value = '' // added
+    this.input.value = '' // added
   };
 
   selectText = () => {
-    var value = this.refs.input.value;
+    var value = this.input.value;
     if(!value) return;
     this.props.onSelect(value);
     this.clearSelectedState();
-    this.refs.input.value = '' // added
+    this.input.value = '' // added
   };
 
   focusNext = (event) => {
@@ -304,7 +304,7 @@ class Combobox extends React.Component {
   };
 
   removeLastToken = () => {
-    if(this.props.onRemoveLast && !this.refs.input.value) {
+    if(this.props.onRemoveLast && !this.input.value) {
       this.props.onRemoveLast()
     }
     return true
@@ -387,7 +387,7 @@ class Combobox extends React.Component {
 
   focusOption = () => {
     var index = this.state.focusedIndex;
-    this.refs.list.childNodes[index].focus();
+    this.list.childNodes[index].focus();
   };
 
   state = {
@@ -419,7 +419,7 @@ class Combobox extends React.Component {
         {this.props.value}
         {this.state.inputValue}
         <input
-          ref="input"
+          ref={e => this.input = e}
           autoComplete="off"
           spellCheck="false"
           aria-label={ariaLabel}
@@ -447,7 +447,7 @@ class Combobox extends React.Component {
         </span>
         <div
           id={this.state.listId}
-          ref="list"
+          ref={e => this.list =e}
           className="ic-tokeninput-list"
           role="listbox">
           {this.state.menu.children}
