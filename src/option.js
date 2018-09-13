@@ -2,9 +2,8 @@ var React = require('react');
 var addClass = require('./add-class');
 var div = React.createFactory('div');
 
-module.exports = React.createClass({
-
-  propTypes: {
+class Option extends React.Component {
+  static propTypes = {
 
     /**
      * The value that will be sent to the `onSelect` handler of the
@@ -22,19 +21,17 @@ module.exports = React.createClass({
      * Whether the element should be selectable
     */
     isFocusable: React.PropTypes.bool
-  },
+  };
 
-  getDefaultProps: function() {
-    return {
-      role: 'option',
-      tabIndex: '-1',
-      className: 'ic-tokeninput-option',
-      isSelected: false,
-      isFocusable: true
-    };
-  },
+  static defaultProps = {
+    role: 'option',
+    tabIndex: '-1',
+    className: 'ic-tokeninput-option',
+    isSelected: false,
+    isFocusable: true
+  };
 
-  render: function() {
+  render() {
     var props = this.props;
     if (props.isSelected) {
       props.className = addClass(props.className, 'ic-tokeninput-selected');
@@ -42,5 +39,6 @@ module.exports = React.createClass({
     }
     return div(props);
   }
+};
 
-});
+module.exports = Option;
