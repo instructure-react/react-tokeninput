@@ -1,5 +1,5 @@
 var React = require('react')
-var TestUtils = require('react-addons-test-utils')
+var TestUtils = require('react-dom/test-utils')
 
 var Combobox = require('../src/combobox')
 var Option = require('../src/option')
