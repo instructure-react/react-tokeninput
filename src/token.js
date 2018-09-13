@@ -1,8 +1,6 @@
 var React = require('react');
-var span = React.DOM.span;
-var li = React.createFactory('li');
 
-module.exports = class extends React.Component {
+class Token extends React.Component {
   handleClick = () => {
     this.props.onRemove(this.props.value)
   };
@@ -19,20 +17,23 @@ module.exports = class extends React.Component {
 
   render() {
     return (
-      li({
-        className: "ic-token inline-flex"
-      },
-        span({className: "ic-token-label"}, this.props.name),
-        span({
-          role: 'button',
-          onClick: this.handleClick,
-          onFocus: this.props.onFocus,
-          onKeyDown: this.handleKeyDown,
-          'aria-label': this.ariaLabelRemove(),
-          className: "ic-token-delete-button",
-          tabIndex: 0
-        }, "✕")
-      )
-    )
+      <li className="ic-token inline-flex">
+        <span className="ic-token-label">
+          {this.props.name}
+        </span>
+        <span
+          role="button"
+          onClick={this.handleClick}
+          onFocus={this.props.onFocus}
+          onKeyDown={this.handleKeyDown}
+          aria-label={this.ariaLabelRemove()}
+          className="ic-token-delete-button"
+          tabIndex={0}>
+          ✕
+        </span>
+      </li>
+    );
   }
 }
+
+module.exports = Token;
