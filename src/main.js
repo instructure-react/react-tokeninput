@@ -25,7 +25,7 @@ class TokenInput extends React.Component {
 
   handleClick = () => {
     // TODO: Expand combobox API for focus
-    this.refs['combo-li'].querySelector('input').focus();
+    this.comboLi.querySelector('input').focus();
   };
 
   handleFocus = () => {
@@ -39,7 +39,7 @@ class TokenInput extends React.Component {
   };
 
   handleSelect = (event, option) => {
-    var input = this.refs['combo-li'].querySelector('input');
+    var input = this.comboLi.querySelector('input');
     this.props.onSelect(event, option)
     this.setState({
       selectedToken: null
@@ -48,7 +48,7 @@ class TokenInput extends React.Component {
   };
 
   handleRemove = (value) => {
-    var input = this.refs['combo-li'].querySelector('input');
+    var input = this.comboLi.querySelector('input');
     this.props.onRemove(value);
     input.focus();
   };
@@ -78,7 +78,7 @@ class TokenInput extends React.Component {
     return (
       <ul className={classes} onClick={this.handleClick}>
         {tokens}
-        <li className="inline-flex" ref="combo-li">
+        <li className="inline-flex" ref={e => this.comboLi = e}>
           <Combobox
             id={this.props.id}
             aria-label={this.props['combobox-aria-label']}
